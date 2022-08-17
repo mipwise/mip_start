@@ -1,0 +1,34 @@
+{
+  "parameters": [
+    [
+      "Sample Text Parameter",
+      "Any Value"
+    ],
+    [
+      "Sample Two Values Parameter",
+      "Value 1"
+    ],
+    [
+      "Sample Float Parameter",
+      1.5
+    ],
+    [
+      "Sample Date Parameter",
+      "2022-11-21 00:00:00"
+    ]
+  ],
+  "sample_input_table": [
+    [
+      "PK_a",
+      "PK_1",
+      "Option 1",
+      2.25
+    ],
+    [
+      "PK_b",
+      "PK_2",
+      "Option 2",
+      4.5
+    ]
+  ]
+}
