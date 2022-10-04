@@ -33,7 +33,7 @@ input_schema.set_data_type(table=table, field='Primary Key One', number_allowed=
 input_schema.set_data_type(table=table, field='Primary Key Two', number_allowed=False, strings_allowed='*')
 input_schema.set_data_type(table=table, field='Data Field One', number_allowed=False,
                            strings_allowed=('Option 1', 'Option 2'))
-input_schema.set_data_type(table=table, field='Data Field Two', number_allowed=True, strings_allowed='*')
+input_schema.set_data_type(table=table, field='Data Field Two', number_allowed=True, strings_allowed=())
 # endregion
 # endregion
 
