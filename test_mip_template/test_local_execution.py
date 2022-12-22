@@ -6,9 +6,12 @@ import os
 
 class TestLocalExecution(unittest.TestCase):
     """
-    Class for convenient local execution of solve engines.
+    THIS IS NOT UNIT TESTING! Unit testing are implemented in other scripts.
 
-    The methods of this class mimic the execution flow that a user typically experience on Mip Hub.
+    This class only serves the purpose of conveniently (with one click) executing solve engines locally during
+    development.
+
+    In addition, the methods in this class mimic the execution flow that a user typically experience on a Mip Hub app.
     """
 
     def test_1_action_data_ingestion(self):
