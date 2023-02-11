@@ -6,6 +6,72 @@ https://github.com/mipwise/mip-go/tree/main/5_develop/4_data_schema
 
 from ticdat import PanDatFactory
 
+
+# region Aliases for datatypes in ticdat
+# Remark: use only aliases that match perfectly your needs, otherwise set datatype explicitly
+float_number = {
+    "number_allowed": True,
+    "strings_allowed": (),
+    "must_be_int": False,
+    "min": -float("inf"),
+    "inclusive_min": False,
+    "max": float("inf"),
+    "inclusive_max": False,
+}
+
+non_negative_float = {
+    "number_allowed": True,
+    "strings_allowed": (),
+    "must_be_int": False,
+    "min": 0,
+    "inclusive_min": True,
+    "max": float("inf"),
+    "inclusive_max": False,
+}
+
+positive_float = {
+    "number_allowed": True,
+    "strings_allowed": (),
+    "must_be_int": False,
+    "min": 0,
+    "inclusive_min": False,
+    "max": float("inf"),
+    "inclusive_max": False,
+}
+
+integer_number = {
+    "number_allowed": True,
+    "strings_allowed": (),
+    "must_be_int": True,
+    "min": -float("inf"),
+    "inclusive_min": False,
+    "max": float("inf"),
+    "inclusive_max": False,
+}
+
+non_negative_integer = {
+    "number_allowed": True,
+    "strings_allowed": (),
+    "must_be_int": True,
+    "min": 0,
+    "inclusive_min": True,
+    "max": float("inf"),
+    "inclusive_max": False,
+}
+
+positive_integer = {
+    "number_allowed": True,
+    "strings_allowed": (),
+    "must_be_int": True,
+    "min": 1,
+    "inclusive_min": True,
+    "max": float("inf"),
+    "inclusive_max": False,
+}
+
+text = {"strings_allowed": "*", "number_allowed": False}
+# endregion
+
 # region INPUT SCHEMA
 input_schema = PanDatFactory(
     parameters=[['Name'], ['Value']],  # Do not change the column names of the parameters table!
