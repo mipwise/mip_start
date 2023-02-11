@@ -69,10 +69,12 @@ def print_failures(schema, failures):
     """Prints out a sample of the data failure encountered."""
     if isinstance(schema, PanDatFactory):
         for table_name, table in failures.items():
-            print(table_name, table.head().to_string())
+            print(table_name)
+            print(table.head().to_string())
     elif isinstance(schema, TicDatFactory):
         for table_name, table in failures.items():
-            print(table_name, {key: table[key] for key in list(table)[:5]})
+            print(table_name)
+            print({key: table[key] for key in list(table)[:5]})
     else:
         raise ValueError('bad schema')
 
@@ -96,17 +98,17 @@ def check_data(dat, schema):
     foreign_key_failures = schema.find_foreign_key_failures(dat)
     if foreign_key_failures:
         print_failures(schema, foreign_key_failures)
-        raise AssertionError(f"Foreign key failures found in {len(foreign_key_failures)} table(s).")
+        raise AssertionError(f"Foreign key failures found in {len(foreign_key_failures)} table(s)/field(s).")
     data_type_failures = schema.find_data_type_failures(dat)
     if data_type_failures:
         print_failures(schema, data_type_failures)
-        raise AssertionError(f"Data type failures found in {len(data_type_failures)} table(s).")
+        raise AssertionError(f"Data type failures found in {len(data_type_failures)} table(s)/field(s).")
     data_row_failures = schema.find_data_row_failures(dat)
     if data_row_failures:
         print_failures(schema, data_row_failures)
-        raise AssertionError(f"Data row failures found in {len(data_row_failures)} table(s).")
+        raise AssertionError(f"Data row failures found in {len(data_row_failures)} table(s)/field(s).")
     duplicates = schema.find_duplicates(dat)
     if duplicates:
         print_failures(schema, duplicates)
-        raise AssertionError(f"Duplicates found in {len(duplicates)} table(s).")
+        raise AssertionError(f"Duplicates found in {len(duplicates)} table(s)/field(s).")
     print('Data is good!')
