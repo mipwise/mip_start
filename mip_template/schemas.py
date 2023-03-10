@@ -69,6 +69,16 @@ positive_integer = {
     "inclusive_max": False,
 }
 
+binary = {
+    "number_allowed": True,
+    "strings_allowed": (),
+    "must_be_int": True,
+    "min": 0,
+    "inclusive_min": True,
+    "max": 1,
+    "inclusive_max": True,
+}
+
 text = {"strings_allowed": "*", "number_allowed": False}
 # endregion
 
