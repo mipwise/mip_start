@@ -59,7 +59,7 @@ def write_data(sln, output_data_loc, schema):
     if output_data_loc.endswith(".xlsx") or output_data_loc.endswith("xls"):
         schema.xls.write_file(sln, path)
     elif output_data_loc.endswith(".json"):
-        schema.json.write_file(sln, path)
+        schema.json.write_file_pd(sln, path, orient='split')
     else:  # write to csv files
         schema.csv.write_directory(sln, path)
     return None
