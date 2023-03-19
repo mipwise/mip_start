@@ -10,6 +10,7 @@ rename `mip_template` with the name of your project in a few places:
   then  `Refactor > Rename...` or just `SHIFT + F6`).
 - [ ] The name of [unit testing script](test_mip_template/test_mip_template.py).
 - [ ] References in [setup.cfg](setup.cfg).
+- [ ] Exceptions in [.gitignore](.gitignore).
 
 Make sure to keep the word "test_" when renaming the testing directory 
 and the unit testing scripts.

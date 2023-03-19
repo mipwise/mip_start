@@ -130,3 +130,9 @@ dmypy.json
 
 # Pycharm stuff
 .idea/
+
+
+# Temporary files used in local execution
+test_mip_template/data/inputs/*.csv
+test_mip_template/data/outputs/*.csv
+test_mip_template/app/output/*.html
