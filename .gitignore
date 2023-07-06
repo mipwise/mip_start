@@ -131,6 +131,8 @@ dmypy.json
 # Pycharm stuff
 .idea/
 
+# vscode stuff
+.vscode/
 
 # Temporary files used in local execution
 test_mip_template/data/inputs/*.csv
