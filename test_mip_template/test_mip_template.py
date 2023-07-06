@@ -18,7 +18,7 @@ class TestMipMe(unittest.TestCase):
 
     def test_2_action_data_prep(self):
         old_sum = self.dat.sample_input_table['Data Field Two'].sum()
-        dat = mip_template.action_data_prep.data_prep_solve(self.dat)
+        dat = mip_template.data_prep_solve(self.dat)
         new_sum = dat.sample_input_table['Data Field Two'].sum()
         close_enough = isclose(new_sum, self.params['Sample Float Parameter'] * old_sum, rel_tol=1e-2)
         self.assertTrue(close_enough, "Data prep check")
@@ -29,7 +29,7 @@ class TestMipMe(unittest.TestCase):
 
     def test_4_action_report_builder(self):
         sln = mip_template.solve(self.dat)
-        sln = mip_template.action_report_builder.report_builder_solve(self.dat, sln)
+        sln = mip_template.report_builder_solve(self.dat, sln)
         self.assertSetEqual(set(sln.sample_output_table['Data Field']), {'Option 1.0', 'Option 2.0'}, "Report check")
 
 
