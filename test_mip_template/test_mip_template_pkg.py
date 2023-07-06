@@ -1,8 +1,9 @@
-import mip_template
-import unittest
 import os
+import unittest
 from math import isclose
-import utils
+
+from test_mip_template import utils
+import mip_template
 
 
 class TestMipMe(unittest.TestCase):
