@@ -1,4 +1,4 @@
-from mip_template import input_schema
+from mip_template.schemas import input_schema
 
 
 def data_prep_solve(dat):
