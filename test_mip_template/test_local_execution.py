@@ -1,8 +1,8 @@
+from .context import mip_template
 import os
 import unittest
 
 from test_mip_template import utils
-import mip_template
 
 
 class TestLocalExecution(unittest.TestCase):

@@ -1,9 +1,9 @@
+from .context import mip_template
 import os
 import unittest
 from math import isclose
 
 from test_mip_template import utils
-import mip_template
 
 
 class TestMipMe(unittest.TestCase):
