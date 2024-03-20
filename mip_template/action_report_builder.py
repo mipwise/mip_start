@@ -17,7 +17,7 @@ def _save_plot(fig, plot_name):
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         fig.write_html(file_path)
     except PermissionError:
-        file_path = os.path.join(f'app/output/{plot_name}.html')
+        file_path = os.path.join(f'test_mip_template/app/output/{plot_name}.html')
         fig.write_html(file_path)
 
 
