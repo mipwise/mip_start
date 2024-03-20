@@ -1,4 +1,4 @@
-from .schemas import input_schema, output_schema
+from mip_template.schemas import input_schema, output_schema
 
 
 def solve(dat):
