@@ -9,7 +9,7 @@ def set_input_parameter(schema, dat, name: str, value: Any):
     assert isinstance(dat, schema.PanDat)
     assert isinstance(name, str)
 
-    if not (name in schema.parameters):
+    if name not in schema.parameters:
         raise ValueError(f"Parameter {repr(name)} not found in schema.")
 
     params_df: pd.DataFrame = dat.parameters.copy()
