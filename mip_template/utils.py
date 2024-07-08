@@ -129,3 +129,58 @@ def _set_series_type_to_str(series: pd.Series) -> pd.Series:
     output = pd.concat([numeric_entries, nan_entries, remaining_entries]).sort_index()
 
     return output
+
+
+def is_null(value) -> bool:
+    """
+    Check if 'value' is None, NaN, empty string, or empty collections.
+
+    The reason to create this function instead of simply relying on the built-in bool() is because
+    1.  bool(float('nan')) returns True, suggesting it's not null, but we want it to be null;
+    2.  bool(0) returns False, suggesting it's null, but we want it to be not null.    
+
+    Parameters
+    ----------
+    value : Any
+        Value to be checked.
+
+    Returns
+    -------
+    bool
+        True if the value is None, NaN, empty string, or empty collections, False otherwise.
+    
+    Examples:
+    >>> is_null(None)
+    True
+    >>> is_null(float('nan'))
+    True
+    >>> is_null(np.nan)
+    True
+    >>> is_null("")
+    True
+    >>> is_null([])
+    True
+    >>> is_null({})
+    True
+    >>> is_null(set())
+    True
+    >>> is_null(0)
+    False
+    >>> is_null("non-empty")
+    False
+    >>> is_null("nan")
+    False
+    >>> is_null([1, 2, 3])
+    False
+    >>> is_null([np.nan])
+    False
+    """
+    if isinstance(value, (int, float)):
+        return np.isnan(value)
+
+    return not bool(value)
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
