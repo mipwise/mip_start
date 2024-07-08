@@ -1,3 +1,4 @@
+import math
 from typing import Any, Dict
 
 import numpy as np
@@ -131,6 +132,45 @@ def _set_series_type_to_str(series: pd.Series) -> pd.Series:
     output = pd.concat([numeric_entries, nan_entries, remaining_entries]).sort_index()
 
     return output
+
+
+def set_parameters_datatypes(params: dict[str, Any], schema: PanDatFactory) -> dict[str, Any]:
+    new_params = {}
+    for parameter, value in params.items():
+        # get ticdat datatype, that is, a dictionary like {number_allowed: True, strings_allowed: (), ...} as defined
+        # in the schema
+        ticdat_datatype = schema.parameters[parameter]._asdict()['type_dictionary']._asdict()
+        
+        if is_null(value):
+            if ticdat_datatype['nullable']:
+                new_params[parameter] = None
+            else:
+                raise ValueError(
+                    f"Parameter {parameter} is not nullable (according to schema), but its value is null: {value}"
+                )
+        
+        else:
+            if ticdat_datatype['datetime']:
+                new_params[parameter] = pd.to_datetime(value)
+            
+            elif ticdat_datatype['strings_allowed']:
+                new_params[parameter] = str(value)
+            
+            elif ticdat_datatype['number_allowed']:
+                numeric_value = float(value)
+                if ticdat_datatype['must_be_int']:
+                    int_value = round(numeric_value)
+                    # ensure we don't accidently round value in a silent bug
+                    if not math.isclose(int_value, numeric_value):
+                        raise BadInputDataError(
+                            f"The parameter '{parameter}' must be int, but rounding it would lead to a relevant "
+                            f"rounding error, and therefore the type conversion is not clear. Value: {numeric_value}"
+                        )
+                    new_params[parameter] = int_value
+                else:
+                    new_params[parameter] = numeric_value
+
+    return new_params
 
 
 def is_null(value) -> bool:
