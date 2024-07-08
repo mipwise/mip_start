@@ -1,4 +1,5 @@
 from mip_template.schemas import input_schema, output_schema
+from mip_template.utils import set_data_types
 
 
 def solve(dat):

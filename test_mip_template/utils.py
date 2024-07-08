@@ -1,7 +1,7 @@
 import inspect
 import os
-from ticdat import PanDatFactory
-from ticdat import TicDatFactory
+
+from ticdat import PanDatFactory, TicDatFactory
 
 
 def _this_directory():
