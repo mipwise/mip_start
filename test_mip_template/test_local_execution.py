@@ -1,7 +1,7 @@
-from .context import mip_template
 import os
 import unittest
 
+import mip_template
 from test_mip_template import utils
 
 
