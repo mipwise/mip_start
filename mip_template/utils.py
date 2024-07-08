@@ -75,10 +75,12 @@ def set_data_types(dat, schema: PanDatFactory):
                 if field_data_type['must_be_int']:
                     int_field = table_df[field].astype(int)
                     # ensure we don't accidently round values in a silent bug
-                    if not np.array_equal(int_field, table_df[field]):
+                    matching_values = np.isclose(int_field, table_df[field])
+                    if not matching_values.all():
                         raise BadInputDataError(
-                            f"The column {table_name}.{field} must be int, but it contains non-integer values that " \
-                            f"would be rounded by .astype(int) and therefore the type conversion is not clear."
+                            f"The column {table_name}.{field} must be int, but it contains non-integer values that "
+                            f"would be rounded by .astype(int) and therefore the type conversion is not clear. "
+                            f"Rounding errors would occur for:\n{table_df.loc[~matching_values].to_string()}"
                         )
                     table_df[field] = int_field
                     
