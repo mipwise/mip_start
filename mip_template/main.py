@@ -4,6 +4,7 @@ from mip_template.utils import set_data_types
 
 def solve(dat):
     """Sample solve engine."""
+    dat = set_data_types(dat=dat, schema=input_schema)
     params = input_schema.create_full_parameters_dict(dat)
     sample_input_table_df = dat.sample_input_table.copy()
     if params['Sample Two Values Parameter'] == 'Value 1':
