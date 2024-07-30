@@ -1,42 +1,48 @@
-import inspect
 import os
+from typing import Dict, Union
 
 from ticdat import PanDatFactory, TicDatFactory
 
 
-def _this_directory():
-    return os.path.dirname(os.path.realpath(os.path.abspath(inspect.getsourcefile(_this_directory))))
-
-
-def read_data(input_data_loc, schema):
+def read_data(input_data_loc: str, schema: Union[PanDatFactory, TicDatFactory]):
     """
     Reads data from files and populates an instance of the corresponding schema.
 
     Parameters
     ----------
     input_data_loc: str
-        The location of the data set inside the `data/` directory.
-        It can be a directory containing CSV files, a xls/xlsx file, or a json file.
+        Path-like string to the input data. It can be a directory containing CSV files, a xls/xlsx file, or a json
+        file.
     schema: PanDatFactory
         An instance of the PanDatFactory class of ticdat.
+    
     Returns
     -------
     PanDat
         a PanDat object populated with the tables available in the input_data_loc.
     """
     print(f'Reading data from: {input_data_loc}')
-    path = os.path.join(_this_directory(), "data", input_data_loc)
-    assert os.path.exists(path), f"bad path {path}"
-    if input_data_loc.endswith(".xlsx") or input_data_loc.endswith(".xls"):
-        dat = schema.xls.create_pan_dat(path)
-    elif input_data_loc.endswith("json"):
-        dat = schema.json.create_pan_dat(path)
+    
+    if not isinstance(input_data_loc, str):
+        raise TypeError(f"input_data_loc should be a string, not {type(input_data_loc)}")
+    if not isinstance(schema, (TicDatFactory, PanDatFactory)):
+        raise TypeError(f"schema should be a TicDatFactory or PanDatFactory, not {type(schema)}")
+    if not os.path.exists(input_data_loc):
+        raise ValueError(f"bad input_data_loc path: '{input_data_loc}'")
+    
+    if str(input_data_loc).endswith(".xlsx") or str(input_data_loc).endswith(".xls"):
+        dat = schema.xls.create_pan_dat(input_data_loc)
+    elif str(input_data_loc).endswith("json"):
+        dat = schema.json.create_pan_dat(input_data_loc)
     else:  # read from cvs files
-        dat = schema.csv.create_pan_dat(path)
+        if not os.path.isdir(input_data_loc):
+            raise ValueError(f"input_data_loc should be a directory, if not .xlsx, .xls, or .json:\n{input_data_loc}")
+        dat = schema.csv.create_pan_dat(input_data_loc)
+    
     return dat
 
 
-def write_data(sln, output_data_loc, schema):
+def write_data(sln, output_data_loc: str, schema: Union[PanDatFactory, TicDatFactory]) -> None:
     """
     Writes data to the specified location.
 
@@ -45,27 +51,39 @@ def write_data(sln, output_data_loc, schema):
     sln: PanDat
         A PanDat object populated with the data to be written to file/files.
     output_data_loc: str
-        A destination inside `data/` to write the data to.
-        It can be a directory (to save the data as CSV files), a xls/xlsx file, or a json file.
+        Path-like string to save the sln to. It can be a directory (to save the data as CSV files), a xls/xlsx file,
+        or a json file.
     schema: PanDatFactory
         An instance of the PanDatFactory class of ticdat compatible with sln.
+    
     Returns
     -------
     None
     """
     print(f'Writing data back to: {output_data_loc}')
-    path = os.path.join(_this_directory(), "data", output_data_loc)
-    # assert os.path.exists(path), f"bad path {path}"
+    
+    if not isinstance(output_data_loc, str):
+        raise TypeError(f"input_data_loc should be a string, not {type(output_data_loc)}")
+    if not isinstance(schema, (TicDatFactory, PanDatFactory)):
+        raise TypeError(f"schema should be a TicDatFactory or PanDatFactory, not {type(schema)}")
+    if not os.path.exists(output_data_loc):
+        raise ValueError(f"bad output_data_loc path: '{output_data_loc}'")
+    
     if output_data_loc.endswith(".xlsx") or output_data_loc.endswith("xls"):
-        schema.xls.write_file(sln, path)
+        schema.xls.write_file(sln, output_data_loc)
     elif output_data_loc.endswith(".json"):
-        schema.json.write_file_pd(sln, path, orient='split')
+        schema.json.write_file_pd(sln, output_data_loc, orient='split')
     else:  # write to csv files
-        schema.csv.write_directory(sln, path)
+        if not os.path.isdir(output_data_loc):
+            raise ValueError(
+                f"output_data_loc should be a directory, if not .xlsx, .xls, or .json:\n{output_data_loc}"
+            )
+        schema.csv.write_directory(sln, output_data_loc)
+    
     return None
 
 
-def print_failures(schema, failures):
+def print_failures(schema: Union[PanDatFactory, TicDatFactory], failures: Dict) -> None:
     """Prints out a sample of the data failure encountered."""
     if isinstance(schema, PanDatFactory):
         for table_name, table in failures.items():
@@ -79,7 +97,7 @@ def print_failures(schema, failures):
         raise ValueError('bad schema')
 
 
-def check_data(dat, schema):
+def check_data(dat, schema: Union[PanDatFactory, TicDatFactory]) -> None:
     """
     Runs data integrity checks and prints out some sample failures to facilitate debugging.
 
