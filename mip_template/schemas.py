@@ -94,6 +94,8 @@ input_schema.add_parameter('Sample Two Values Parameter', default_value='Value 1
                            strings_allowed=['Value 1', 'Value 2'])
 input_schema.add_parameter('Sample Float Parameter', default_value=1.5, number_allowed=True, strings_allowed=(),
                            must_be_int=False, min=0, inclusive_min=True, max=10, inclusive_max=True)
+input_schema.add_parameter('Sample Int Parameter', default_value=1, number_allowed=True, strings_allowed=(),
+                           must_be_int=True, min=0, inclusive_min=True, max=10, inclusive_max=True)
 input_schema.add_parameter('Sample Date Parameter', default_value='11/21/2022', datetime=True)
 # endregion
 
