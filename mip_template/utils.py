@@ -48,6 +48,9 @@ def set_data_types(dat, schema: PanDatFactory):
     Remember that ticdat doesn't enforce datatypes, it's meant only to check/validate the input data matches the
     specified types.
     """
+    assert isinstance(schema, PanDatFactory)
+    assert schema.good_pan_dat_object(dat)
+    
     dat_ = schema.copy_pan_dat(pan_dat=dat)
 
     # get data_types dict from input_schema: {}
