@@ -135,7 +135,7 @@ def print_failures(schema: Union[PanDatFactory, TicDatFactory], failures: Dict) 
             print(table_name)
             print({key: table[key] for key in list(table)[:5]})
     else:
-        raise ValueError('bad schema')
+        raise TypeError(f'bad schema type: {type(schema)}')
 
 
 def check_data(dat, schema: Union[PanDatFactory, TicDatFactory]) -> None:
@@ -147,29 +147,30 @@ def check_data(dat, schema: Union[PanDatFactory, TicDatFactory]) -> None:
     :return: None
     """
     print('Running data integrity check...')
-    assert isinstance(schema, (TicDatFactory, PanDatFactory))
     if isinstance(schema, TicDatFactory):
         if not schema.good_tic_dat_object(dat):
-            raise AssertionError("Not a good TicDat object")
-    else:
+            raise InputDataError("Not a good TicDat object")
+    elif isinstance(schema, PanDatFactory):
         if not schema.good_pan_dat_object(dat):
-            raise AssertionError("Not a good PanDat object")
+            raise InputDataError("Not a good PanDat object")
+    else:
+        raise TypeError(f'bad schema type: {type(schema)}')
     foreign_key_failures = schema.find_foreign_key_failures(dat)
     if foreign_key_failures:
         print_failures(schema, foreign_key_failures)
-        raise AssertionError(f"Foreign key failures found in {len(foreign_key_failures)} table(s)/field(s).")
+        raise InputDataError(f"Foreign key failures found in {len(foreign_key_failures)} table(s)/field(s).")
     data_type_failures = schema.find_data_type_failures(dat)
     if data_type_failures:
         print_failures(schema, data_type_failures)
-        raise AssertionError(f"Data type failures found in {len(data_type_failures)} table(s)/field(s).")
+        raise InputDataError(f"Data type failures found in {len(data_type_failures)} table(s)/field(s).")
     data_row_failures = schema.find_data_row_failures(dat)
     if data_row_failures:
         print_failures(schema, data_row_failures)
-        raise AssertionError(f"Data row failures found in {len(data_row_failures)} table(s)/field(s).")
+        raise InputDataError(f"Data row failures found in {len(data_row_failures)} table(s)/field(s).")
     duplicates = schema.find_duplicates(dat)
     if duplicates:
         print_failures(schema, duplicates)
-        raise AssertionError(f"Duplicates found in {len(duplicates)} table(s)/field(s).")
+        raise InputDataError(f"Duplicates found in {len(duplicates)} table(s)/field(s).")
     print('Data is good!')
 
 # endregion
@@ -182,8 +183,10 @@ def set_data_types(dat, schema: PanDatFactory):
     Remember that ticdat doesn't enforce datatypes, it's meant only to check/validate the input data matches the
     specified types.
     """
-    assert isinstance(schema, PanDatFactory)
-    assert schema.good_pan_dat_object(dat)
+    if not isinstance(schema, PanDatFactory):
+        raise TypeError(f"schema should be a PanDatFactory object, not {type(schema)}")
+    if not schema.good_pan_dat_object(dat):
+        raise InputDataError("dat is not a good PanDat object")
     
     dat_ = schema.copy_pan_dat(pan_dat=dat)
 
@@ -272,6 +275,11 @@ def _set_series_type_to_str(series: pd.Series) -> pd.Series:
 
 
 def set_parameters_datatypes(params: Dict[str, Any], schema: PanDatFactory) -> Dict[str, Any]:
+    if not isinstance(params, dict):
+        raise TypeError(f"params should be a dictionary, not {type(params)}")
+    if not isinstance(schema, PanDatFactory):
+        raise TypeError(f"schema should be a PanDatFactory object, not {type(schema)}")
+    
     new_params = {}
     for parameter, value in params.items():
         # get ticdat datatype, that is, a dictionary like {number_allowed: True, strings_allowed: (), ...} as defined
