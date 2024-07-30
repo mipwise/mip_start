@@ -271,7 +271,7 @@ def _set_series_type_to_str(series: pd.Series) -> pd.Series:
     return output
 
 
-def set_parameters_datatypes(params: dict[str, Any], schema: PanDatFactory) -> dict[str, Any]:
+def set_parameters_datatypes(params: Dict[str, Any], schema: PanDatFactory) -> Dict[str, Any]:
     new_params = {}
     for parameter, value in params.items():
         # get ticdat datatype, that is, a dictionary like {number_allowed: True, strings_allowed: (), ...} as defined
@@ -360,7 +360,7 @@ def is_null(value) -> bool:
     return not bool(value)
 
 
-def check_foreign_key(dat, native_table: dict, foreign_table: dict, reverse: bool = False) -> None:
+def check_foreign_key(dat, native_table: Dict, foreign_table: Dict, reverse: bool = False) -> None:
     """
     Ensure a foreign key relation from native_table to foreign_table structures.
 
@@ -471,7 +471,7 @@ def check_foreign_key(dat, native_table: dict, foreign_table: dict, reverse: boo
     foreign_table_df = getattr(dat, foreign_table['name'])
     
     # create standard function to get the entries for each table, as a set, to compare
-    def _get_entries_to_compare(table_dict: dict, table_df: pd.DataFrame) -> set:
+    def _get_entries_to_compare(table_dict: Dict, table_df: pd.DataFrame) -> set:
         df = table_df.copy()
         # if table_dict sets a subset to filter its dataframe, filter it
         for column, subset in table_dict.get('subset', {}).items():
@@ -484,7 +484,7 @@ def check_foreign_key(dat, native_table: dict, foreign_table: dict, reverse: boo
     foreign_table_entries: set = _get_entries_to_compare(foreign_table, foreign_table_df)
     
     # create function to standardize the error message
-    def _error_message(native_table: dict, foreign_table: dict, df_to_report: pd.DataFrame) -> str:
+    def _error_message(native_table: Dict, foreign_table: Dict, df_to_report: pd.DataFrame) -> str:
         base_text = (
             f"The following {native_table['entry']} show up in {native_table['name']}[{native_table['field']}],"
             
