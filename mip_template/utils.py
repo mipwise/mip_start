@@ -1,5 +1,5 @@
 import math
-from typing import Any, Dict
+from typing import Any, Dict, List, Set, Tuple
 
 import numpy as np
 import pandas as pd
@@ -223,121 +223,167 @@ def is_null(value) -> bool:
     return not bool(value)
 
 
-def check_field_inclusion(dat, native_table: dict, foreign_table: dict, reverse: bool = False) -> None:
+def check_foreign_key(dat, native_table: dict, foreign_table: dict, reverse: bool = False) -> None:
     """
     Ensure a foreign key relation from native_table to foreign_table structures.
 
+    This is similar to ticdat's foreign keys. The advantage of this function is that it allows for filtering the
+    tables before checking the foreign key relation, if desired. For example, it's useful when there's a master
+    customers table with a type column, and another table with a customer's field supposed to have only some specific
+    customers' types, the standard ticdat's foreign key relation would not be enough to check this.
+    
     Parameters
     ----------
     dat
         A PanDat object that holds the native and foreign tables as attributes.
-    native_table : dict
+    native_table, foreign_table : Dict[str, Any]
         A dictionary with the following keys:
             name : str
-                The name of the native table.
-            field : str
-                The field in the native table to be checked against a foreign table's field.
-            field_subset : str or None, default=None
-                The field in the native table to be used to filter its rows when checking inclusion. See 'subset'.
-                Set it to None if no filter is supposed to be applied, that is, all rows of the native table are to
-                be checked at 'field' column.
-            subset : set or None, default=None
-                A set of values for filtering the native table by where 'field_subset' is in 'subset' before checking
-                the inclusion. Set it to None if no filter is supposed to be applied.
+                The name of the native/foreign table.
+            fields : str or list[str]
+                Field (or list of fields) in the native/foreign table to be checked against a foreign/native table's
+                field (or list of fields). If a list, the foreign_table/native_table's corresponding value must be a
+                list as well, with the same length.
             entry: str
-                The name of the entry in the native table to be reported in the error message.
-    foreign_table : dict
-        A dictionary with the following keys:
-            name : str
-                The name of the foreign table.
-            field : str
-                The field in the foreign table that holds the reference values for the native table's field.
-            field_subset : str or None, default=None
-                The field in the foreign table to be used to filter its rows when checking inclusion. See 'subset'.
-                Set it to None if no filter is supposed to be applied, that is, all rows of the foreign table hold
-                reference values (at 'field' column) for the native table's 'field' column.
-            subset : set or None, default=None
-                A set of values for filtering the foreign table by where 'field_subset' is in 'subset' before checking
-                the inclusion. Set it to None if no filter is supposed to be applied.
-            entry: str
-                The name of the entry in the foreign table to be reported in the error message.
+                The name of the entry in the native/foreign table to be reported in the error message.
+            subset : Dict[str, Union[List, Dict, Tuple, Set]] or None, default=None
+                A dictionary whose keys are fields of the native/foreign table, and values are either, sets, lists,
+                tuples, or dictionaries. It'll be used to filter the native/foreign table by where
+                the field is in the iterable before checking the inclusion. Set it to None if no filter is supposed to
+                be applied.
     reverse : bool, default=False
-        Whether to check the reverse inclusion as well. Defaults to False, that is, only the unidirectional inclusion
-        from the native table to the foreign table is checked. Set it to True to check the equality.
+        Whether to check the reverse inclusion as well, i.e., equality. Defaults to False, that is, only the
+        unidirectional inclusion from the native table to the foreign table is checked. Set it to True to check the
+        equality.
 
     Raises
     ------
+    AssertionError
+        If one of the mandatory keys 'name', 'fields', and 'entry' is not present in the dictionaries native_table
+        and/or foreign_table. If 'name' doesn't refer to an actual input table (i.e. attribute of dat). If 'fields' is
+        not a str or a list of str of columns for the corresponding table (dataframe). If 'subset' is given but is not
+        a dictionary of str: Union[List, Dict, Tuple, Set] whose keys are columns for the corresponding table
+        (dataframe).
+        
     BadInputDataError
-        If the foreign key relation from the native table to the foreign table fails, that is, the field in the native
-        table (possibly filtered) contains some value(s) not present in the foreign table's field (possibly filtered).
-        If reverse is True, then this exception is raised in case the equality fails (instead of the unidirectional
-        inclusion).
+        If the foreign key relation from the native table to the foreign table fails, that is, the field(s) in the
+        native table (possibly filtered) contains some value(s) not present in the foreign table's field(s) (possibly
+        filtered). If reverse is True, then this exception is raised in case the equality fails (instead of the
+        unidirectional inclusion).
     """
     # ensure mandatory dictionaries' keys are present
     mandatory_keys = ['name', 'field', 'entry']
     missing_keys = []  # list of tuples (dictionary, missing_key) to report
     for dictionary, dict_name in [(native_table, 'native_table'), (foreign_table, 'foreign_table')]:
+        # get missing mandatory keys in the argument dictionaries
         for key in mandatory_keys:
             if key not in dictionary:
                 missing_keys.append((dict_name, key))
-        # ensure field_subset and subset are both present or both absent
-        if ('field_subset' in dictionary) != ('subset' in dictionary):
-            raise ValueError(
-                f"If 'field_subset' is set, 'subset' must be set as well, and vice-versa. {dict_name}:\n{dictionary}"
-            )
-    if missing_keys:
-        raise ValueError(
-            f"{mandatory_keys} are mandatory keys for the dictionaries native_table and foreign_table. The following "
-            f"are pairs of (dictionary, missing_key):\n{missing_keys}"
-        )
     
+    assert not missing_keys, (
+        f"{mandatory_keys} are mandatory keys for the dictionaries native_table and foreign_table. The following "
+        f"are pairs of (dictionary, missing_key):\n{missing_keys}"
+    )
+    
+    # ensure consistency between the given arguments
+    for dictionary, dict_name in [(native_table, 'native_table'), (foreign_table, 'foreign_table')]:
+        # ensure correct tables' names are indeed attributes of dat
+        table_name = dictionary['name']
+        assert hasattr(dat, table_name), (
+            f"{dict_name}['name'] should be an attribute of 'dat', i.e., an input table, got '{table_name}' instead"
+        )
+        table_df = getattr(dat, table_name)
+        
+        # ensure fields are str or list[str] and are indeed columns of their corresponding tables
+        fields = dictionary['field']
+        assert isinstance(fields, (str, list)), (
+            f"{dict_name}['field'] must be either a str or a list, got {type(fields)} instead: {fields}"
+        )
+        if isinstance(fields, list):
+            assert all(isinstance(field, str) for field in fields), (
+                f"When {dict_name}['field'] is a list, its elements must be strings, got {fields}"
+            )
+        if isinstance(fields, str):
+            # overwrite the str with a singleton list back in the original dictionary
+            dictionary['field'] = [fields]
+            fields = [fields]
+        for field in fields:
+            assert field in table_df.columns, (
+                f"'{field}' (from {dict_name}['fields']) is not a column of '{table_name}' table. Available "
+                f"columns are: {list(table_df.columns)}"
+            )
+
+        # ensure subset is a dictionary of str: Union[List, Dict, Tuple, Set], if passed, whose keys are indeed
+        # columns of the table
+        subset = dictionary.get('subset', None)
+        if subset is not None:
+            assert isinstance(subset, dict), (
+                f"{dict_name}['subset'] must be a dictionary, got {type(subset)} instead: {subset}"
+            )
+            for field in subset:
+                assert field in table_df.columns, (
+                    f"'{field}' key (from {dict_name}['subset']) is not a column of '{table_name}' table. Available "
+                    f"columns are: {list(table_df.columns)}"
+                )
+                assert isinstance(subset[field], (Dict, List, Set, Tuple)), (
+                    f"{dict_name}['subset'][{field}] must be a dict, list, set or tuple, got {type(subset[field])} "
+                    f"instead: {subset[field]}"
+                )
+            
     native_table_df = getattr(dat, native_table['name'])
     foreign_table_df = getattr(dat, foreign_table['name'])
     
-    # create standard function to get the indices
-    def _get_indices_to_compare(table_dict: dict, table_df: pd.DataFrame) -> set:
-        assert bool(table_dict.get('field_subset', False)) == bool(table_dict.get('subset', False)), (
-            f"If 'field_subset' is set, 'subset' must be set as well, and vice-versa.\n{table_dict}"
-        )
-        
-        if table_dict.get('field_subset'):
-            return set(table_df.loc[
-                table_df[table_dict['field_subset']].isin(table_dict['subset']), table_dict['field']
-            ])
-        
-        return set(table_df[table_dict['field']])
+    # create standard function to get the entries for each table, as a set, to compare
+    def _get_entries_to_compare(table_dict: dict, table_df: pd.DataFrame) -> set:
+        df = table_df.copy()
+        # if table_dict sets a subset to filter its dataframe, filter it
+        for column, subset in table_dict.get('subset', {}).items():
+            df = df[df[column].isin(subset)]
+        # return the entries as a set of tuples whose length is the number of fields
+        return set(df[table_dict['field']].apply(tuple, axis=1))
     
     # get sets of values to compare
-    native_table_entries: set = _get_indices_to_compare(native_table, native_table_df)
-    foreign_table_entries: set = _get_indices_to_compare(foreign_table, foreign_table_df)
+    native_table_entries: set = _get_entries_to_compare(native_table, native_table_df)
+    foreign_table_entries: set = _get_entries_to_compare(foreign_table, foreign_table_df)
     
     # create function to standardize the error message
     def _error_message(native_table: dict, foreign_table: dict, df_to_report: pd.DataFrame) -> str:
         base_text = (
-            f"The following {native_table['entry']} show up in {native_table['name']}.{native_table['field']}, "
-            f"but they don't appear in {foreign_table['name']}.{foreign_table['field']}"
+            f"The following {native_table['entry']} show up in {native_table['name']}[{native_table['field']}],"
+            
         )
         
-        if 'field_subset' in foreign_table:
-            base_text += (
-                f" (where {foreign_table['name']}.{foreign_table['field_subset']} is in {foreign_table['subset']})"
-            )
+        if 'subset' in native_table:
+            base_text += f" where {native_table['name']} satisfies"
+            for field, subset in native_table['subset'].items():
+                base_text += f" {field} is in {subset},"
+        
+        base_text += f" but they don't appear in {foreign_table['name']}[{foreign_table['field']}]"
+        
+        if 'subset' in foreign_table:
+            base_text += f" where {foreign_table['name']} satisfies"
+            for field, subset in foreign_table['subset'].items():
+                base_text += f" {field} is in {subset}, "
 
-        return base_text + f":\n{df_to_report.to_string(index=False)}"
+        return base_text.rstrip(', ') + f":\n{df_to_report.to_string(index=False)}"
     
     # compare inclusion of values from the native table into the foreign ones
     missing_entries = native_table_entries.difference(foreign_table_entries)
     if missing_entries:
         # there are entries in the native table that are not in the foreign table
-        df_to_report = native_table_df[native_table_df[native_table['field']].isin(missing_entries)]
+        df_to_report = native_table_df[
+            native_table_df[native_table['field']].apply(tuple, axis=1).isin(missing_entries)
+        ]
         raise BadInputDataError(_error_message(native_table, foreign_table, df_to_report))
     
-    # check reverse inclusion if requested
+    # check reverse inclusion (i.e. equality) if requested
     if reverse:
         missing_entries_reverse = foreign_table_entries.difference(native_table_entries)
         if missing_entries_reverse:
             # there are entries in the foreign table that are not in the native table
-            df_to_report = foreign_table_df[foreign_table_df[foreign_table['field']].isin(missing_entries_reverse)]
+            df_to_report = foreign_table_df[
+                foreign_table_df[foreign_table['field']].apply(tuple, axis=1).isin(missing_entries_reverse)
+            ]
             raise BadInputDataError(_error_message(foreign_table, native_table, df_to_report))
 
 
