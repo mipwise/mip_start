@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from ticdat import PanDatFactory, TicDatFactory
 
-from mip_template.constants import BadInputDataError
+from mip_template.constants import InputDataError
 
 
 # region Set ticdat parameters
@@ -215,7 +215,7 @@ def set_data_types(dat, schema: PanDatFactory):
                     # ensure we don't accidently round values in a silent bug
                     matching_values = np.isclose(int_field, table_df[field])
                     if not matching_values.all():
-                        raise BadInputDataError(
+                        raise InputDataError(
                             f"The column {table_name}.{field} must be int, but it contains non-integer values that "
                             f"would be rounded by .astype(int) and therefore the type conversion is not clear. "
                             f"Rounding errors would occur for:\n{table_df.loc[~matching_values].to_string()}"
@@ -299,7 +299,7 @@ def set_parameters_datatypes(params: dict[str, Any], schema: PanDatFactory) -> d
                     int_value = round(numeric_value)
                     # ensure we don't accidently round value in a silent bug
                     if not math.isclose(int_value, numeric_value):
-                        raise BadInputDataError(
+                        raise InputDataError(
                             f"The parameter '{parameter}' must be int, but rounding it would lead to a relevant "
                             f"rounding error, and therefore the type conversion is not clear. Value: {numeric_value}"
                         )
@@ -511,7 +511,7 @@ def check_foreign_key(dat, native_table: dict, foreign_table: dict, reverse: boo
         df_to_report = native_table_df[
             native_table_df[native_table['field']].apply(tuple, axis=1).isin(missing_entries)
         ]
-        raise BadInputDataError(_error_message(native_table, foreign_table, df_to_report))
+        raise InputDataError(_error_message(native_table, foreign_table, df_to_report))
     
     # check reverse inclusion (i.e. equality) if requested
     if reverse:
@@ -521,7 +521,7 @@ def check_foreign_key(dat, native_table: dict, foreign_table: dict, reverse: boo
             df_to_report = foreign_table_df[
                 foreign_table_df[foreign_table['field']].apply(tuple, axis=1).isin(missing_entries_reverse)
             ]
-            raise BadInputDataError(_error_message(foreign_table, native_table, df_to_report))
+            raise InputDataError(_error_message(foreign_table, native_table, df_to_report))
 
 # endregion
 

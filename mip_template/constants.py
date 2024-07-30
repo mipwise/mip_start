@@ -1,10 +1,10 @@
-class BadInputDataError(Exception):
+class InputDataError(Exception):
     """
     Raised whenever the input data is not valid.
     """
 
 
-class BadSolutionError(Exception):
+class SolutionError(Exception):
     """
     Raised when the output from the optimization or the output tables contain some problem.
     
