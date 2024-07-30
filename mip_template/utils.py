@@ -9,6 +9,7 @@ from ticdat import PanDatFactory, TicDatFactory
 from mip_template.constants import BadInputDataError
 
 
+# region Set ticdat parameters
 def set_input_parameter(schema, dat, name: str, value: Any):
     assert isinstance(schema, PanDatFactory)
     assert isinstance(dat, schema.PanDat)
@@ -41,7 +42,9 @@ def set_multiple_input_parameters(schema, dat, parameters: Dict[str, Any]):
 
     return _dat
 
+# endregion
 
+# region Read/write/check data
 def read_data(input_data_loc: str, schema: Union[PanDatFactory, TicDatFactory]):
     """
     Reads data from files and populates an instance of the corresponding schema.
@@ -169,7 +172,9 @@ def check_data(dat, schema: Union[PanDatFactory, TicDatFactory]) -> None:
         raise AssertionError(f"Duplicates found in {len(duplicates)} table(s)/field(s).")
     print('Data is good!')
 
+# endregion
 
+# region Manual data type setting/checking and foreign key relationships
 def set_data_types(dat, schema: PanDatFactory):
     """
     Return a copy of the input dat with the data types set according to the schema.
@@ -517,6 +522,8 @@ def check_foreign_key(dat, native_table: dict, foreign_table: dict, reverse: boo
                 foreign_table_df[foreign_table['field']].apply(tuple, axis=1).isin(missing_entries_reverse)
             ]
             raise BadInputDataError(_error_message(foreign_table, native_table, df_to_report))
+
+# endregion
 
 
 if __name__ == "__main__":
