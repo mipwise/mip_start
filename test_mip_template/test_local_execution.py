@@ -1,9 +1,11 @@
-import os
 import unittest
+from pathlib import Path
 
 import mip_template
 from test_mip_template import utils
 
+
+cwd = Path(__file__).parent.resolve()
 
 class TestLocalExecution(unittest.TestCase):
     """
@@ -16,25 +18,25 @@ class TestLocalExecution(unittest.TestCase):
     """
 
     def test_1_action_data_ingestion(self):
-        dat = utils.read_data(os.path.join('testing_data', 'testing_data.json'), mip_template.input_schema)
+        dat = utils.read_data(f'{cwd}/data/testing_data/testing_data.json', mip_template.input_schema)
         utils.check_data(dat, mip_template.input_schema)
-        utils.write_data(dat, 'inputs', mip_template.input_schema)
+        utils.write_data(dat, f'{cwd}/data/inputs', mip_template.input_schema)
 
     def test_2_action_data_prep(self):
-        dat = utils.read_data('inputs', mip_template.input_schema)
+        dat = utils.read_data(f'{cwd}/data/inputs', mip_template.input_schema)
         dat = mip_template.data_prep_solve(dat)
-        utils.write_data(dat, 'inputs', mip_template.input_schema)
+        utils.write_data(dat, f'{cwd}/data/inputs', mip_template.input_schema)
 
     def test_3_main_solve(self):
-        dat = utils.read_data('inputs', mip_template.input_schema)
+        dat = utils.read_data(f'{cwd}/data/inputs', mip_template.input_schema)
         sln = mip_template.solve(dat)
-        utils.write_data(sln, 'outputs', mip_template.output_schema)
+        utils.write_data(sln, f'{cwd}/data/outputs', mip_template.output_schema)
 
     def test_4_action_report_builder(self):
-        dat = utils.read_data('inputs', mip_template.input_schema)
-        sln = utils.read_data('outputs', mip_template.output_schema)
+        dat = utils.read_data(f'{cwd}/data/inputs', mip_template.input_schema)
+        sln = utils.read_data(f'{cwd}/data/outputs', mip_template.output_schema)
         sln = mip_template.report_builder_solve(dat, sln)
-        utils.write_data(sln, 'outputs', mip_template.output_schema)
+        utils.write_data(sln, f'{cwd}/data/outputs', mip_template.output_schema)
 
 
 if __name__ == '__main__':
