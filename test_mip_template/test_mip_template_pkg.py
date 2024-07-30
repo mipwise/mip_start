@@ -3,7 +3,7 @@ import unittest
 from math import isclose
 
 import mip_template
-from test_mip_template import utils
+from mip_template import utils
 
 
 class TestMipMe(unittest.TestCase):

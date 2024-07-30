@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 
 import mip_template
-from test_mip_template import utils
+from mip_template import utils
 
 
 cwd = Path(__file__).parent.resolve()
