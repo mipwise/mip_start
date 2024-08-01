@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from ticdat import PanDatFactory, TicDatFactory
 
-from mip_template.constants import InputDataError
+from mip_template.exceptions import InputDataError
 
 
 # region Set ticdat parameters
