@@ -1,3 +1,4 @@
 ticdat>=0.2.22
 pandas>=1.4.3
 plotly>=5.13.1
+mip_utils
