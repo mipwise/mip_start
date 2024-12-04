@@ -13,6 +13,10 @@
       1.5
     ],
     [
+      "Sample Int Parameter",
+      1
+    ],
+    [
       "Sample Date Parameter",
       "2022-11-21 00:00:00"
     ]

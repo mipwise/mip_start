@@ -6,6 +6,8 @@ https://github.com/mipwise/mip-go/tree/main/5_develop/4_data_schema
 
 from ticdat import PanDatFactory
 
+from mip_template.constants import SampleConstants
+
 
 # region Aliases for datatypes in ticdat
 # Remark: use only aliases that match perfectly your needs, otherwise set datatype explicitly
@@ -90,10 +92,12 @@ input_schema = PanDatFactory(
 
 # region USER PARAMETERS
 input_schema.add_parameter('Sample Text Parameter', default_value='Any Text', number_allowed=False, strings_allowed='*')
-input_schema.add_parameter('Sample Two Values Parameter', default_value='Value 1', number_allowed=False,
-                           strings_allowed=['Value 1', 'Value 2'])
+input_schema.add_parameter('Sample Two Values Parameter', default_value=SampleConstants.FIRST_VALUE,
+                           number_allowed=False, strings_allowed=tuple(SampleConstants))
 input_schema.add_parameter('Sample Float Parameter', default_value=1.5, number_allowed=True, strings_allowed=(),
                            must_be_int=False, min=0, inclusive_min=True, max=10, inclusive_max=True)
+input_schema.add_parameter('Sample Int Parameter', default_value=1, number_allowed=True, strings_allowed=(),
+                           must_be_int=True, min=0, inclusive_min=True, max=10, inclusive_max=True)
 input_schema.add_parameter('Sample Date Parameter', default_value='11/21/2022', datetime=True)
 # endregion
 
