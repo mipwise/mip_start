@@ -3,10 +3,10 @@ Defines the input and output schemas of the problem.
 For more details on how to implement and configure data schemas see:
 https://github.com/mipwise/mip-go/tree/main/5_develop/4_data_schema
 """
-from mip_utils.ticdat_types import text, positive_float, positive_integer, float_number
+from mip_utils.ticdat_types import float_number, positive_float, positive_integer, text
 from ticdat import PanDatFactory
 
-from mip_template.constants import SAMPLE_CONSTANTS
+from mip_template.constants import SampleConstants
 
 
 # region INPUT SCHEMA
@@ -17,10 +17,8 @@ input_schema = PanDatFactory(parameters=[['Name'], ['Value']],
 
 # region USER PARAMETERS
 input_schema.add_parameter('Sample Text Parameter', default_value='Any Text', **text())
-# below, we examplify the use of constants: tuple(SAMPLE_CONSTANTS) is equivalent to ('Value 1', 'Value 2'), and
-# SAMPLE_CONSTANTS.FIRST_VALUE is equivalent to 'Value 1'
-input_schema.add_parameter('Sample Two Values Parameter', default_value=SAMPLE_CONSTANTS.FIRST_VALUE,
-                           **text(strings_allowed=tuple(SAMPLE_CONSTANTS)))
+input_schema.add_parameter('Sample Two Values Parameter', default_value=SampleConstants.FIRST_VALUE,
+                           **text(strings_allowed=tuple(SampleConstants)))
 input_schema.add_parameter('Sample Float Parameter', default_value=1.5,
                            **positive_float(max=10, inclusive_max=True))
 input_schema.add_parameter('Sample Int Parameter', default_value=1,

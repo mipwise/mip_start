@@ -13,7 +13,7 @@ description = "Template package for building analytics solutions"
 authors = [
     {name = "Mip Wise", email = "contact@mipwise.com"}
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 readme = "README.md"
 classifiers = [
     'Programming Language :: Python :: 3',
@@ -25,10 +25,11 @@ classifiers = [
 ]
 
 dependencies = [
-    "ticdat>=0.2.24",
-    "pandas>=2.0.1",
+    "mip-utils>=0.1.0",
     "numpy>=2.0.1",
-    "mip-utils>=0.1.0"
+    "pandas>=2.0.1",
+    "plotly>=5.13.1",
+    "ticdat>=0.2.24",
 ]
 
 [project.urls]
