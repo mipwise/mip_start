@@ -1,7 +1,7 @@
 from mip_utils.exceptions import ParameterError
+from mip_utils.ticdat_utils import set_data_types, set_parameters_datatypes
 
 from mip_template.schemas import input_schema, output_schema
-from mip_utils.ticdat_utils import set_data_types, set_parameters_datatypes
 
 
 def solve(dat):

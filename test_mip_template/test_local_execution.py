@@ -1,8 +1,9 @@
 import unittest
 from pathlib import Path
 
-import mip_template
 from mip_utils import ticdat_utils as utils
+
+import mip_template
 
 
 cwd = Path(__file__).parent.resolve()
