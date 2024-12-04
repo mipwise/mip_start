@@ -10,9 +10,10 @@ from mip_template.constants import SampleConstants
 
 
 # region INPUT SCHEMA
-input_schema = PanDatFactory(parameters=[['Name'], ['Value']],
-    # Do not change the column names of the parameters table!
-    sample_input_table=[['Primary Key One', 'Primary Key Two'], ['Data Field One', 'Data Field Two']])
+input_schema = PanDatFactory(
+    parameters=[['Name'], ['Value']],  # Do not change the column names of the parameters table!
+    sample_input_table=[['Primary Key One', 'Primary Key Two'], ['Data Field One', 'Data Field Two']],
+)
 # endregion
 
 # region USER PARAMETERS
@@ -27,7 +28,9 @@ input_schema.add_parameter('Sample Date Parameter', default_value='11/21/2022', 
 # endregion
 
 # region OUTPUT SCHEMA
-output_schema = PanDatFactory(sample_output_table=[['Primary Key'], ['Data Field']])
+output_schema = PanDatFactory(
+    sample_output_table=[['Primary Key'], ['Data Field']],
+)
 # endregion
 
 # region DATA TYPES AND PREDICATES - INPUT SCHEMA
