@@ -1,17 +1,19 @@
-import os
 import unittest
 from math import isclose
+from pathlib import Path
 
 from mip_utils import ticdat_utils as utils
 
 import mip_template
 
 
+cwd = Path(__file__).parent.resolve()
+
 class TestMipMe(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        dat = utils.read_data(os.path.join('testing_data', 'testing_data.json'), mip_template.input_schema)
+        dat = utils.read_data(f'{cwd}/data/testing_data/testing_data.json', mip_template.input_schema)
         cls.params = mip_template.input_schema.create_full_parameters_dict(dat)
         cls.dat = dat
 
