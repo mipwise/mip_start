@@ -5,7 +5,7 @@ description = "Template package for building analytics solutions"
 authors = [
     {name = "Mip Wise", email = "contact@mipwise.com"}
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.11,<4.0"
 readme = "README.md"
 classifiers = [
     'Programming Language :: Python :: 3',
