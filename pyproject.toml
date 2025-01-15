@@ -1,14 +1,6 @@
-[build-system]
-build-backend = "setuptools.build_meta"
-requires = [
-    "setuptools>=69",
-    "wheel"
-]
-
 [project]
 name = "mip_template"
 dynamic = ["version"]
-
 description = "Template package for building analytics solutions"
 authors = [
     {name = "Mip Wise", email = "contact@mipwise.com"}
@@ -23,7 +15,6 @@ classifiers = [
     'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent'
 ]
-
 dependencies = [
     "mip-utils>=0.1.0",
     "numpy>=2.0.1",
@@ -36,6 +27,13 @@ dependencies = [
 homepage = "https://github.com/mipwise/mip_template"
 source = "https://github.com/mipwise/mip_template"
 tracker = "https://github.com/mipwise/mip_template/issues"
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools>=69",
+    "wheel"
+]
 
 [tool.setuptools.dynamic]
 version = {attr = "mip_template.__version__"}
