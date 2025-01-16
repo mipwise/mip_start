@@ -33,7 +33,7 @@ and the unit testing scripts.
 
 **TL;DR**: basic `uv` setup:
 - after cloning the repository (and everytime `pyproject.toml` is modified, e.g. after a `git pull`), simply run `uv sync`
-- to manage dependencies, either modify `pyproject.toml` manually (but not `uv.lock`!) and run `uv sync` afterwards, or use `uv add <package>` and `uv remove <package>`
+- to manage dependencies, simply call `uv add <package>` and `uv remove <package>`. Alternatively, you can modify `pyproject.toml` manually (but not `uv.lock`!) and run `uv sync` afterwards
 
 **Note**: all the basic `uv` commands (`sync`, `add`, `remove`) will create a virtual environment `.venv` with default arguments (i.e. as `uv venv` would) if it doesn't exist yet. If environment variables were set, they will be used. Also, those commands also regenerate `uv.lock` accordingly.
 
@@ -55,7 +55,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 ### **2. Set Up the Virtual Environment**
 
-**Note**: `uv sync`, `uv add <package>`, and `uv remove <package>` already create a virtual environment `.venv` (as `uv venv` does) if it doesn't exist yet. So, you only need to call `uv venv` if you want to specify arguments on how to create it.
+**Note**: `uv sync`, `uv add <package>`, and `uv remove <package>` already create a virtual environment `.venv` (as `uv venv` does) if it doesn't exist yet. So, you only need to call `uv venv` if you want to specify arguments on how to create it (e.g. python version).
 
 To manually create a virtual environment with `uv`, navigate to the project's root folder and run:
 ```bash
@@ -83,7 +83,7 @@ To ensure your virtual environment matches the lock file:
 uv sync
 ```
 
-Use this after pulling changes or updating `pyproject.toml`.
+Use this everytime `pyproject.toml` is modified, for example after pulling changes (e.g. through `git pull`).
 
 It updates the dependencies installed in the virtual environment to match exactly the ones in the lock file `uv.lock` (created from `pyproject.toml`). This means installing dependencies from `uv.lock` that are currently missing in the virtual environment, and also removing packages from the virtual environment that are not listed in `uv.lock`.
 
@@ -101,7 +101,7 @@ To add a new dependency to the project:
 uv add <package>
 ```
 
-`uv` will install the most recent version of `<package>` in the virtual environment (as `pip install <package>` would do). `uv`  will also add `<package>` dependency to `pyproject.toml` (under `dependencies` table) and update `uv.lock` accordingly.
+`uv` will install the most recent version of `<package>` in the virtual environment (as `pip install <package>` would do). `uv`  will also add `<package>` dependency to `pyproject.toml` (under `dependencies` table) and update `uv.lock` accordingly, which is handy.
 
 `uv` also handles version specification according to [PEP 508](https://peps.python.org/pep-0508/) (e.g. `uv add <package>==1.0.0`).
 
@@ -180,7 +180,7 @@ export UV_PROJECT_ENVIRONMENT=path/to/my/venv
 on Linux/macOS, or through
 
 ```powershell
-$env:UV_PROJECT_ENVIRONMENT = "path/to/my/venv"
+$env:UV_PROJECT_ENVIRONMENT = "path\to\my\venv"
 ```
 on Windows. However, this would require you to set that variable everytime you start a terminal/IDE session, which is annoying.
 
@@ -189,11 +189,9 @@ Instead, you can create a `.env` file in the project root with the following con
 UV_PROJECT_ENVIRONMENT="path/to/my/venv"
 ```
 
-and configure your IDE to load `.env` everytime you open a new session.
-
-For VS Code users, you can install the [sync-env](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env) extension to automatically load variables from environment files (default=`.env`).
-
-<font color="red"> **TODO**: add instructions for Pycharm </font>
+and configure your IDE to load `.env` everytime you open a new session:
+- for VS Code users, you can install the [sync-env](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env) extension to automatically load variables from environment files (default=`.env`).
+- for Pycharm users, <font color="red"> **TODO**: add instructions for Pycharm </font>
 
 Finally, if you're using git for version control, ensure `.env` is not tracked by adding it to `.gitignore`:
 ```plaintext
@@ -202,8 +200,8 @@ Finally, if you're using git for version control, ensure `.env` is not tracked b
 
 ### Environment Variables
 
-Besides `UV_PROJECT_ENVIRONMENT` as explained [here](#customizing-the-virtual-environment-path), another useful environment variable to add to `.env` is
+Besides `UV_PROJECT_ENVIRONMENT` as explained [above](#customizing-the-virtual-environment-path), another useful environment variable to add to `.env` is
 ```plaintext
 UV_PYTHON=3.11
 ```
-to specify the python version for `uv` to use. By setting `UV_PYTHON`, you don't need to specify the `--python` argument for `uv venv`.
+to specify the python version for `uv` to use (e.g. 3.11). By setting `UV_PYTHON`, you don't need to specify the `--python` argument for `uv venv`.
