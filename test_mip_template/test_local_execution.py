@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from mip_utils import ticdat_utils as utils
+from mwcommons import ticdat_utils as utils
 
 import mip_template
 
