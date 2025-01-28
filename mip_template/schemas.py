@@ -3,7 +3,7 @@ Defines the input and output schemas of the problem.
 For more details on how to implement and configure data schemas see:
 https://github.com/mipwise/mip-go/tree/main/5_develop/4_data_schema
 """
-from mip_utils.ticdat_types import float_number, positive_float, positive_integer, text
+from mwcommons.ticdat_types import float_number, positive_float, positive_integer, text
 from ticdat import PanDatFactory
 
 from mip_template.constants import SampleConstants
