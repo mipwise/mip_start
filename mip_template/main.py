@@ -1,5 +1,5 @@
-from mip_utils.exceptions import ParameterError
-from mip_utils.ticdat_utils import set_data_types, set_parameters_datatypes
+from mwcommons.exceptions import ParameterError
+from mwcommons.ticdat_utils import set_data_types, set_parameters_datatypes
 
 from mip_template.schemas import input_schema, output_schema
 
@@ -15,7 +15,7 @@ def solve(dat):
     elif params['Sample Two Values Parameter'] == 'Value 2':
         sample_output_table_df = sample_input_table_df[['Primary Key Two', 'Data Field Two']]
     else:
-        raise ParameterError(f"bad value for 'Sample Two Values Parameter': {params['Sample Two Values Parameter']}", ValueError)
+        raise ParameterError(f"bad value for 'Sample Two Values Parameter': {params['Sample Two Values Parameter']}")
     sample_output_table_df.rename(
         columns={'Primary Key One': 'Primary Key', 'Data Field One': 'Data Field'}, inplace=True)
     sln = output_schema.PanDat()

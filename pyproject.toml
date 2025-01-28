@@ -15,7 +15,7 @@ classifiers = [
     'Operating System :: OS Independent'
 ]
 dependencies = [
-    "mip-utils>=0.1.0",
+    "mwcommons>=0.0.2",
     "plotly>=5.13.1",
     "ticdat>=0.2.24",
 ]
