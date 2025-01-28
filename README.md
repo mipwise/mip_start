@@ -150,7 +150,7 @@ Optional dependencies cannot be omitted. Dependencies from other groups can be c
 For example, by running `uv add pandas` (that also installs `numpy`, one of `pandas`'s dependencies) and then `uv remove pandas`, `uv` correctly installs and uninstalls `numpy`, however `pip freeze`/`pip list` still returns `numpy` as one of the installed packages. By running `python -c "import numpy"` you can confirm that `numpy` is indeed not installed (unless it's also a dependency in `pyproject.toml`).
 
 #### **Build the Package**
-To build the package,
+To build the package:
 ```bash
 uv build
 ```
