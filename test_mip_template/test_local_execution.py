@@ -36,7 +36,7 @@ class TestLocalExecution(unittest.TestCase):
     def test_4_action_report_builder(self):
         dat = utils.read_data(f'{cwd}/data/inputs', mip_template.input_schema)
         sln = utils.read_data(f'{cwd}/data/outputs', mip_template.output_schema)
-        sln = mip_template.report_builder_solve(dat, sln)
+        sln = mip_template.report_builder_solve(dat, sln, 'test_mip_template/app/output')
         utils.write_data(sln, f'{cwd}/data/outputs', mip_template.output_schema)
 
 
