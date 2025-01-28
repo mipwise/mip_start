@@ -38,7 +38,7 @@ and the unit testing scripts.
 
 **Note**: all the basic `uv` commands (`sync`, `add`, `remove`) will create a virtual environment `.venv` with default arguments (i.e. as `uv venv` would) if it doesn't exist yet. If environment variables were set, they will be used. Also, those commands also regenerate `uv.lock` accordingly.
 
-**Note**: you don't need to activate the virtual environment on the terminal to run `uv` commands. For example, `uv add <package>` installs `<package>` on `uv`'s venv (e.g. `.venv`) regardless of its activation. However, you do need to activate it if you intend to run scripts from the terminal (`source .venv/bin/activate` on Linux/macOS, `.venv\Scripts\activate` on Windows). Similarly, you need to select `uv`'s venv as the python interpreter for your IDE if you use one (e.g. VS Code or Pycharm).
+**Note**: you don't need to activate the virtual environment on the terminal to run `uv` commands. For example, `uv add <package>` installs `<package>` on `uv`'s venv (e.g. `.venv`) regardless of its activation. However, you do need to activate it if you intend to run scripts from the terminal, use`source .venv/bin/activate` on Linux/macOS, or `.venv\Scripts\activate` on Windows. Similarly, you need to select `uv`'s venv as the python interpreter for your IDE if you use one (e.g. VS Code or Pycharm).
 
 ### **1. Installing `uv`**
 
