@@ -180,28 +180,41 @@ export UV_PROJECT_ENVIRONMENT=path/to/my/venv
 on Linux/macOS, or through
 
 ```powershell
-$env:UV_PROJECT_ENVIRONMENT = "path\to\my\venv"
+$env:UV_PROJECT_ENVIRONMENT = path\to\my\venv
 ```
 on Windows. However, this would require you to set that variable everytime you start a terminal/IDE session, which is annoying.
 
-Instead, you can create a `.env` file in the project root with the following content:
+Instead, you can take advantage of the IDE to set environment variables just once:
+
+#### VS Code
+Create a `.env` file in the project root folder with the following content:
 ```plaintext
-UV_PROJECT_ENVIRONMENT="path/to/my/venv"
+UV_PROJECT_ENVIRONMENT=path/to/my/venv
 ```
 
-and configure your IDE to load `.env` everytime you open a new session:
-- for VS Code users, you can install the [sync-env](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env) extension to automatically load variables from environment files (default=`.env`).
-- for Pycharm users, <font color="red"> **TODO**: add instructions for Pycharm </font>
+for Linux/macOS, or
+```plaintext
+UV_PROJECT_ENVIRONMENT=path\to\my\venv
+```
 
-Finally, if you're using git for version control, ensure `.env` is not tracked by adding it to `.gitignore`:
+on Windows. Then, you need to configure VS Code to load `.env` everytime you open a new terminal session: simply add `"python.envFile": "${workspaceFolder}/.env"` to your `settings.json` file. See more details [here](https://code.visualstudio.com/docs/python/environments#_environment-variables).
+
+Remember to reload your IDE tab to make sure the changes take effect. You may also need to manually reload the terminal session.
+
+Finally, if you're using git for version control, ensure `.env` is not tracked by adding the following line to `.gitignore`:
 ```plaintext
 .env
 ```
 
+#### Pycharm
+Go to `Settings` > `Tools` > `Terminal` and create the environment variable in `Environment variables` field. Restart any terminal session you have open for the change to take effect.
+
 ### Environment Variables
 
-Besides `UV_PROJECT_ENVIRONMENT` as explained [above](#customizing-the-virtual-environment-path), another useful environment variable to add to `.env` is
+Besides `UV_PROJECT_ENVIRONMENT` as explained [above](#customizing-the-virtual-environment-path), there are other useful environment variables you can set:
+
+#### Python Version
 ```plaintext
 UV_PYTHON=3.11
 ```
-to specify the python version for `uv` to use (e.g. 3.11). By setting `UV_PYTHON`, you don't need to specify the `--python` argument for `uv venv`.
+`UV_PYTHON` specifies the python version for `uv` to use (e.g. 3.11). By setting `UV_PYTHON`, you don't need to specify the `--python` argument for `uv venv`.
