@@ -32,12 +32,13 @@ and the unit testing scripts.
 `uv` is a tool for managing your Python project, including dependencies. The goal here is to help you create a local virtual environment using `uv` and understand the most common commands.
 
 **TL;DR**: basic `uv` setup:
+- install `uv` on your system
 - after cloning the repository (and everytime `pyproject.toml` is modified, e.g. after a `git pull`), simply run `uv sync`
 - to manage dependencies, simply call `uv add <package>` and `uv remove <package>`. Alternatively, you can modify `pyproject.toml` manually (but not `uv.lock`!) and run `uv sync` afterwards
 
 **Note**: all the basic `uv` commands (`sync`, `add`, `remove`) will create a virtual environment `.venv` with default arguments (i.e. as `uv venv` would) if it doesn't exist yet. If environment variables were set, they will be used. Also, those commands also regenerate `uv.lock` accordingly.
 
-**Note**: you don't need to activate the virtual environment on the terminal to run `uv` commands. For example, `uv add <package>` installs `<package>` on `uv`'s venv (e.g. `.venv`) regardless of its activation. However, you do need to activate it if you intend to run scripts from the terminal. Similarly, you need to select `uv`'s venv as the python interpreter for your IDE if you use one (e.g. VS Code or Pycharm).
+**Note**: you don't need to activate the virtual environment on the terminal to run `uv` commands. For example, `uv add <package>` installs `<package>` on `uv`'s venv (e.g. `.venv`) regardless of its activation. However, you do need to activate it if you intend to run scripts from the terminal (`source .venv/bin/activate` on Linux/macOS, `.venv\Scripts\activate` on Windows). Similarly, you need to select `uv`'s venv as the python interpreter for your IDE if you use one (e.g. VS Code or Pycharm).
 
 ### **1. Installing `uv`**
 
