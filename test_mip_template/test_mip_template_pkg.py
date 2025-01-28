@@ -33,7 +33,7 @@ class TestMipMe(unittest.TestCase):
 
     def test_4_action_report_builder(self):
         sln = mip_template.solve(self.dat)
-        sln = mip_template.report_builder_solve(self.dat, sln, 'test_mip_template/app/output')
+        sln = mip_template.report_builder_solve(self.dat, sln, f'{cwd}/test_mip_template/app/output')
         self.assertSetEqual(set(sln.sample_output_table['Data Field']), {'Option 1.0', 'Option 2.0'}, "Report check")
 
 
