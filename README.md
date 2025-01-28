@@ -32,7 +32,7 @@ and the unit testing scripts.
 `uv` is a tool for managing your Python project, including dependencies. The goal here is to help you create a local virtual environment using `uv` and understand the most common commands.
 
 **TL;DR**: basic `uv` setup:
-- install `uv` on your system
+- install `uv` on your system, [see how](https://docs.astral.sh/uv/getting-started/installation/)
 - after cloning the repository (and everytime `pyproject.toml` is modified, e.g. after a `git pull`), simply run `uv sync`
 - to manage dependencies, simply call `uv add <package>` and `uv remove <package>`. Alternatively, you can modify `pyproject.toml` manually (but not `uv.lock`!) and run `uv sync` afterwards
 
@@ -70,7 +70,7 @@ If you activate `.venv` on a terminal (`source .venv/bin/activate` on Linux/macO
 uv venv --python 3.11 --prompt my_preferred_display_name
 ```
 
-**Note**: a good reason to use `uv` to create the virtual environment instead of `pip` is that `uv` already adds the project's root folder to the virtual environment python path. This means any python's `import` statement relative to the root of the project works nicely regardless of the IDE you're using, even from the command line.
+**Note**: a good reason to use `uv` to create the virtual environment instead of `python -m venv .venv`, for example, is that `uv` already adds the project's root folder to the virtual environment python path. This means any python's `import` statement relative to the root of the project works nicely regardless of the IDE you're using, even from the command line.
 
 If you want to customize the virtual environment path/name, please refer to [Customizing the Virtual Environment Path](#customizing-the-virtual-environment-path).
 
