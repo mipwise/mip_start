@@ -9,7 +9,7 @@ rename `mip_template` with the name of your project in a few places:
   [testing](test_mip_template) directories (in Pycharm, do a right-click and 
   then  `Refactor > Rename...` or just `SHIFT + F6`).
 - [ ] The name of [unit testing script](test_mip_template/test_mip_template.py).
-- [ ] References in [setup.cfg](setup.cfg).
+- [ ] References in [pyproject.toml](pyproject.toml).
 - [ ] Exceptions in [.gitignore](.gitignore).
 
 Make sure to keep the word "test_" when renaming the testing directory 
@@ -24,7 +24,7 @@ and the unit testing scripts.
   solution engine, and other auxiliary modules.
 - [test_mip_template](test_mip_template): Hosts testing suits and testing data 
   sets used for testing the solution throughout the development process.
-- `pyproject.toml` and `setup.cfg` are used to build the distribution files 
+- `pyproject.toml` is used to build the distribution files 
   of the package (more information [here](https://github.com/mipwise/mip-go/blob/main/6_deploy/1_distribution_package/README.md)).
 
 ## Setting Up and Using `uv`
@@ -53,7 +53,7 @@ while in Windows one can use
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-### **2. Set Up the Virtual Environment**
+### **2. Setting Up the Virtual Environment**
 
 **Note**: `uv sync`, `uv add <package>`, and `uv remove <package>` already create a virtual environment `.venv` (as `uv venv` does) if it doesn't exist yet. So, you only need to call `uv venv` if you want to specify arguments on how to create it (e.g. python version).
 
