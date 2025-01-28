@@ -1,4 +1,4 @@
-numpy>=2.0.1
 pandas>=2.0.1
 plotly>=5.13.1
 ticdat>=0.2.24
+mwcommons>=0.0.2

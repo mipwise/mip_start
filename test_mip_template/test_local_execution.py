@@ -1,8 +1,9 @@
 import unittest
 from pathlib import Path
 
+from mwcommons import ticdat_utils as utils
+
 import mip_template
-from mip_template import utils
 
 
 cwd = Path(__file__).parent.resolve()
@@ -35,7 +36,7 @@ class TestLocalExecution(unittest.TestCase):
     def test_4_action_report_builder(self):
         dat = utils.read_data(f'{cwd}/data/inputs', mip_template.input_schema)
         sln = utils.read_data(f'{cwd}/data/outputs', mip_template.output_schema)
-        sln = mip_template.report_builder_solve(dat, sln)
+        sln = mip_template.report_builder_solve(dat, sln, f'{cwd}/app/output')
         utils.write_data(sln, f'{cwd}/data/outputs', mip_template.output_schema)
 
 

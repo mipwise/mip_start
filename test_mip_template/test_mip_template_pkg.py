@@ -1,16 +1,19 @@
-import os
 import unittest
 from math import isclose
+from pathlib import Path
+
+from mwcommons import ticdat_utils as utils
 
 import mip_template
-from mip_template import utils
 
+
+cwd = Path(__file__).parent.resolve()
 
 class TestMipMe(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        dat = utils.read_data(os.path.join('testing_data', 'testing_data.json'), mip_template.input_schema)
+        dat = utils.read_data(f'{cwd}/data/testing_data/testing_data.json', mip_template.input_schema)
         cls.params = mip_template.input_schema.create_full_parameters_dict(dat)
         cls.dat = dat
 
@@ -30,7 +33,7 @@ class TestMipMe(unittest.TestCase):
 
     def test_4_action_report_builder(self):
         sln = mip_template.solve(self.dat)
-        sln = mip_template.report_builder_solve(self.dat, sln)
+        sln = mip_template.report_builder_solve(self.dat, sln, f'{cwd}/app/output')
         self.assertSetEqual(set(sln.sample_output_table['Data Field']), {'Option 1.0', 'Option 2.0'}, "Report check")
 
 
