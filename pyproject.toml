@@ -1,40 +1,36 @@
-[build-system]
-build-backend = "setuptools.build_meta"
-requires = [
-    "setuptools>=69",
-    "wheel"
-]
-
 [project]
 name = "mip_template"
 dynamic = ["version"]
-
 description = "Template package for building analytics solutions"
 authors = [
     {name = "Mip Wise", email = "contact@mipwise.com"}
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.11,<4.0"
 readme = "README.md"
 classifiers = [
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.12',
     'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent'
 ]
-
 dependencies = [
-    "pandas>=2.0.1",
+    "mwcommons>=0.0.2",
     "plotly>=5.13.1",
     "ticdat>=0.2.24",
-    "mwcommons>=0.0.2"
 ]
 
 [project.urls]
 homepage = "https://github.com/mipwise/mip_template"
 source = "https://github.com/mipwise/mip_template"
 tracker = "https://github.com/mipwise/mip_template/issues"
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools>=69",
+    "wheel"
+]
 
 [tool.setuptools.dynamic]
 version = {attr = "mip_template.__version__"}
