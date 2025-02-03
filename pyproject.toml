@@ -15,8 +15,10 @@ classifiers = [
     'Operating System :: OS Independent'
 ]
 dependencies = [
+    "jupyterlab>=4.3.5",
     "mwcommons>=0.0.2",
     "plotly>=5.13.1",
+    "ruff>=0.9.4",
     "ticdat>=0.2.24",
 ]
 
