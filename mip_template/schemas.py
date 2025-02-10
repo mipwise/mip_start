@@ -3,7 +3,7 @@ Defines the input and output schemas of the problem.
 For more details on how to implement and configure data schemas see:
 https://github.com/mipwise/mip-go/tree/main/5_develop/4_data_schema
 """
-from mwcommons.ticdat_types import float_number, positive_float, positive_integer, text, non_negative_float
+from mwcommons.ticdat_types import float_number, non_negative_float, non_negative_integer, text
 from ticdat import PanDatFactory
 
 from mip_template.constants import SampleConstants
@@ -23,7 +23,7 @@ input_schema.add_parameter('Sample Two Values Parameter', default_value=SampleCo
 input_schema.add_parameter('Sample Float Parameter', default_value=1.5,
                            **non_negative_float(max=10, inclusive_max=True))
 input_schema.add_parameter('Sample Int Parameter', default_value=1,
-                           **non_negative_float(max=10, inclusive_max=True))
+                           **non_negative_integer(max=10, inclusive_max=True))
 input_schema.add_parameter('Sample Date Parameter', default_value='11/21/2022', datetime=True)
 # endregion
 
