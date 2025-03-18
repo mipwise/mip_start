@@ -1,23 +1,30 @@
-from mwcommons.exceptions import ParameterError
 from mwcommons.ticdat_utils import set_data_types, set_parameters_datatypes
 
-from mip_template.schemas import input_schema, output_schema
+from mip_template.create_output_data import create_output_tables
+from mip_template.load_model_data import get_optimization_data
+from mip_template.model import optimize
+from mip_template.schemas import input_schema
 
 
 def solve(dat):
-    """Sample solve engine."""
+    """
+    Main solve engine.
+    
+    Parameters
+    ----------
+    dat
+        Input data, according to input schema.
+    
+    Returns
+    -------
+    sln
+        Output data, according to output schema.
+    """
     dat = set_data_types(dat=dat, schema=input_schema)
     params = input_schema.create_full_parameters_dict(dat)
     params = set_parameters_datatypes(params=params, schema=input_schema)
-    sample_input_table_df = dat.sample_input_table.copy()
-    if params['Sample Two Values Parameter'] == 'Value 1':
-        sample_output_table_df = sample_input_table_df[['Primary Key One', 'Data Field One']]
-    elif params['Sample Two Values Parameter'] == 'Value 2':
-        sample_output_table_df = sample_input_table_df[['Primary Key Two', 'Data Field Two']]
-    else:
-        raise ParameterError(f"bad value for 'Sample Two Values Parameter': {params['Sample Two Values Parameter']}")
-    sample_output_table_df.rename(
-        columns={'Primary Key One': 'Primary Key', 'Data Field One': 'Data Field'}, inplace=True)
-    sln = output_schema.PanDat()
-    sln.sample_output_table = sample_output_table_df
+    data_in = get_optimization_data(dat=dat, params=params)
+    data_out = optimize(data_in=data_in, params=params)
+    sln = create_output_tables(dat=dat, data_in=data_in, data_out=data_out)
+    
     return sln

@@ -1,5 +1,6 @@
 from enum import StrEnum
 
+
 APP_OUTPUT_DIR = '/app/output'
 
 class SolverTypes(StrEnum):
