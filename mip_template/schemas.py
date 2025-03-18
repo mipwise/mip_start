@@ -9,6 +9,8 @@ from ticdat import PanDatFactory
 from mip_template.constants import SampleConstants
 
 
+# TODO: replace by diet problem schema
+# TODO: add TimeLimit and MipGap as ticdat parameters
 # region INPUT SCHEMA
 input_schema = PanDatFactory(
     parameters=[['Name'], ['Value']],  # Do not change the column names of the parameters table!
