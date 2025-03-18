@@ -21,6 +21,7 @@ def _save_plot(fig: Figure, plot_name: str, path: str=APP_OUTPUT_DIR):
     fig.write_html(file_path)
 
 
+# TODO: create a meaningful visualization
 def report_builder_solve(dat, sln, path=APP_OUTPUT_DIR):
     """Sample output action."""
     sample_input_table_df = dat.sample_input_table.copy()

@@ -1,6 +1,7 @@
 from mip_template.schemas import input_schema
 
 
+# TODO: replace by update_food_cost() function
 def data_prep_solve(dat):
     """Sample input action."""
     params = input_schema.create_full_parameters_dict(dat)
