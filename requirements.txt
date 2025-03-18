@@ -1,0 +1,3 @@
+mwcommons>=0.0.2
+plotly>=5.13.1
+ticdat>=0.2.24
