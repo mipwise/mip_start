@@ -41,3 +41,8 @@ version = {attr = "mip_template.__version__"}
 where = ["."]
 include = ["mip_template"]
 exclude = ["test_mip_template"]
+
+[dependency-groups]
+dev = [
+    "openpyxl>=3.1.5",
+]
