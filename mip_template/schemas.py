@@ -77,6 +77,8 @@ table = 'nutrition'
 output_schema.set_data_type(table=table, field='Nutrient ID', **text())
 output_schema.set_data_type(table=table, field='Nutrient Name', **text())
 output_schema.set_data_type(table=table, field='Quantity', **non_negative_float())
+output_schema.set_data_type(table=table, field='Min Intake', **non_negative_float())
+output_schema.set_data_type(table=table, field='Max Intake', **non_negative_float())
 # endregion
 
 # endregion

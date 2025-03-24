@@ -2,8 +2,10 @@
 Module to read the outputs from the model and create output data.
 """
 from typing import Any
-from mip_template import output_schema
+
 import pandas as pd
+
+from mip_template.schemas import output_schema
 
 
 def create_output_tables(dat, data_in: dict[str, Any], data_out: dict[str, Any]):
@@ -36,11 +38,12 @@ def create_output_tables(dat, data_in: dict[str, Any], data_out: dict[str, Any])
     nutrition_df = buy_df.merge(foods_nutrients_df, on='Food ID', how='left')
     nutrition_df['Quantity'] = nutrition_df['Quantity'] * nutrition_df['Quantity per Food']
     nutrition_df = nutrition_df[['Nutrient ID', 'Quantity']].groupby('Nutrient ID').agg('sum').reset_index()
-    # merge nutrition with nutrients to get nutrient's names
-    nutrients_df = dat.nutrients[['Nutrient ID', 'Nutrient Name']]
+    # merge nutrition with nutrients to get additional columns
+    nutrients_df = dat.nutrients[['Nutrient ID', 'Nutrient Name', 'Min Intake']]
     nutrition_df = nutrition_df.merge(nutrients_df, on='Nutrient ID', how='left')
     nutrition_df = nutrition_df.round({'Quantity': 2})
-    nutrition_df = nutrition_df.astype({'Nutrient ID': str, 'Nutrient Name': str, 'Quantity': 'Float64'})
+    nutrition_df = nutrition_df.astype({'Nutrient ID': str, 'Nutrient Name': str, 'Quantity': 'Float64',
+                                        'Min Intake': 'Float64', 'Max Intake': 'Float64'})
     sln.nutrition = nutrition_df
     
     return sln
