@@ -11,10 +11,11 @@ from mip_template.constants import Portions
 # region INPUT SCHEMA
 input_schema = PanDatFactory(
     # syntax: table_name=[['Primary Key One', 'Primary Key Two'], ['Data Field One', 'Data Field Two']]
-    parameters=[['Name'], ['Value']],
+    parameters=[['Name'], ['Value']],  # this is a special table for parameters, don't change it!
     foods=[['Food ID'], ['Food Name', 'Per Unit Cost']],
     nutrients=[['Nutrient ID'], ['Nutrient Name', 'Min Intake', 'Max Intake']],
-    foods_nutrients=[['Food ID', 'Nutrient ID'], ['Quantity']])
+    foods_nutrients=[['Food ID', 'Nutrient ID'], ['Quantity']],
+)
 # endregion
 
 # region USER PARAMETERS
@@ -27,7 +28,8 @@ input_schema.add_parameter('Mip Gap', default_value=0.001, **non_negative_float(
 # region OUTPUT SCHEMA
 output_schema = PanDatFactory(
     buy=[['Food ID'], ['Food Name', 'Quantity']],
-    nutrition=[['Nutrient ID'], ['Nutrient Name', 'Quantity']])
+    nutrition=[['Nutrient ID'], ['Nutrient Name', 'Quantity']],
+)
 # endregion
 
 # region DATA TYPES AND PREDICATES - INPUT SCHEMA
