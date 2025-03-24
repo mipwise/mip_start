@@ -1,4 +1,4 @@
-from mwcommons.ticdat_utils import set_data_types, set_parameters_datatypes
+from mwcommons.ticdat_utils import check_data, set_data_types, set_parameters_datatypes
 from mip_template import input_schema
 from mip_template import get_optimization_data, optimize, create_output_tables
 
@@ -20,6 +20,9 @@ def solve(dat):
 
     # Set data types for input data
     dat = set_data_types(dat=dat, schema=input_schema)
+    
+    # Check input data, according to input schema definition
+    check_data(dat, input_schema)
 
     # Set data types for parameters
     params = input_schema.create_full_parameters_dict(dat)
