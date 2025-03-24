@@ -28,7 +28,7 @@ input_schema.add_parameter('Mip Gap', default_value=0.001, **non_negative_float(
 # region OUTPUT SCHEMA
 output_schema = PanDatFactory(
     buy=[['Food ID'], ['Food Name', 'Quantity']],
-    nutrition=[['Nutrient ID'], ['Nutrient Name', 'Quantity']],
+    nutrition=[['Nutrient ID'], ['Nutrient Name', 'Quantity', 'Min Intake', 'Max Intake']],
 )
 # endregion
 
