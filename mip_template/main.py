@@ -1,6 +1,9 @@
 from mwcommons.ticdat_utils import check_data, set_data_types, set_parameters_datatypes
-from mip_template import input_schema
-from mip_template import get_optimization_data, optimize, create_output_tables
+
+from mip_template.create_output_data import create_output_tables
+from mip_template.load_model_data import get_optimization_data
+from mip_template.model import optimize
+from mip_template.schemas import input_schema
 
 
 def solve(dat):
