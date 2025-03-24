@@ -3,10 +3,11 @@ Defines the input and output schemas of the problem.
 For more details on how to implement and configure data schemas see:
 https://github.com/mipwise/mip-go/tree/main/5_develop/4_data_schema
 """
-from mwcommons.ticdat_types import non_negative_float, non_negative_integer, text
+from mwcommons.ticdat_types import non_negative_float, text
 from ticdat import PanDatFactory
 
 from mip_template.constants import Portions
+
 
 # region INPUT SCHEMA
 input_schema = PanDatFactory(
@@ -19,9 +20,8 @@ input_schema = PanDatFactory(
 # endregion
 
 # region USER PARAMETERS
-input_schema.add_parameter('Food Portions', default_value=Portions.WHOLE, **text(tuple(Portions)))
-input_schema.add_parameter('Food Cost Multiplier', default_value=1.5, **non_negative_float(max=10, inclusive_max=True))
-input_schema.add_parameter('Time Limit', default_value=None, nullable=True, **non_negative_integer())
+input_schema.add_parameter('Food Cost Multiplier', default_value=1.5, **non_negative_float())
+input_schema.add_parameter('Time Limit', default_value=None, nullable=True, **non_negative_float())
 input_schema.add_parameter('Mip Gap', default_value=0.001, **non_negative_float(max=1.0, inclusive_max=False))
 # endregion
 
