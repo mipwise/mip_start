@@ -7,7 +7,7 @@ from plotly.graph_objs import Figure
 from mip_template.constants import APP_OUTPUT_DIR
 
 
-def _save_plot(fig: Figure, plot_name: str, path: str=APP_OUTPUT_DIR):
+def _save_plot(fig: Figure, plot_name: str, path: str = APP_OUTPUT_DIR):
     """Save plots, as HTML, to the default directory of Mip Hub.
 
     When executed locally, saves the HTML file to app/output/ (default directory of Mip Hub), or to the specified path.
@@ -22,7 +22,7 @@ def _save_plot(fig: Figure, plot_name: str, path: str=APP_OUTPUT_DIR):
 
 
 # TODO: create a meaningful visualization
-def report_builder_solve(dat, sln, path=APP_OUTPUT_DIR):
+def report_builder_solve(dat, sln, path: str = APP_OUTPUT_DIR):
     """Sample output action."""
     sample_input_table_df = dat.sample_input_table.copy()
     sample_output_table_df = sln.sample_output_table.copy()
@@ -40,4 +40,5 @@ def report_builder_solve(dat, sln, path=APP_OUTPUT_DIR):
     _save_plot(fig, 'TablePlot', path)
     # endregion
     sln.sample_output_table = sample_output_table_df
+    
     return sln
