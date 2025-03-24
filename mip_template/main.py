@@ -33,4 +33,5 @@ def solve(dat):
 
     # Populate output tables
     sln = create_output_tables(dat, model_data, model_sol)
+    
     return sln

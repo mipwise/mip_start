@@ -4,7 +4,7 @@ Module to read input data and create the optimization parameters.
 from typing import Any
 
 
-def get_optimization_data(dat, params) -> dict[str, Any]:
+def get_optimization_data(dat, params: dict[str, Any]) -> dict[str, Any]:
     """
     Read input data and prepare optimization parameters.
     
@@ -20,7 +20,6 @@ def get_optimization_data(dat, params) -> dict[str, Any]:
     data_in
         Dictionary with optimization parameters as {param_name: value} according to the formulation.
     """
-
     model_data = dict()  # initialize empty dict to store data for model
     model_data['I'] = set(dat.foods['Food ID'])
     model_data['J'] = set(dat.nutrients['Nutrient ID'])
