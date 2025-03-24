@@ -46,8 +46,8 @@ input_schema.set_default_value(table=table, field='Per Unit Cost', default_value
 table = 'nutrients'
 input_schema.set_data_type(table=table, field='Nutrient ID', **text())
 input_schema.set_data_type(table=table, field='Nutrient Name', **text())
-input_schema.set_data_type(table=table, field='Min Intake', **non_negative_float(), nullable=False)
-input_schema.set_data_type(table=table, field='Max Intake', **non_negative_float(), nullable=True)
+input_schema.set_data_type(table=table, field='Min Intake', **non_negative_float())
+input_schema.set_data_type(table=table, field='Max Intake', **non_negative_float())
 input_schema.add_data_row_predicate(table=table, predicate_name='Min Intake <= Max Intake',
                                     predicate=lambda row: row['Min Intake'] <= row['Max Intake'])
 # endregion
