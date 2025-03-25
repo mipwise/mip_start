@@ -13,7 +13,7 @@ from mip_template.constants import Portions
 input_schema = PanDatFactory(
     # syntax: table_name=[['Primary Key One', 'Primary Key Two'], ['Data Field One', 'Data Field Two']]
     parameters=[['Name'], ['Value']],  # this is a special table for parameters, don't change it!
-    foods=[['Food ID'], ['Food Name', 'Per Unit Cost']],
+    foods=[['Food ID'], ['Food Name', 'Per Unit Cost', 'Portion']],
     nutrients=[['Nutrient ID'], ['Nutrient Name', 'Min Intake', 'Max Intake']],
     foods_nutrients=[['Food ID', 'Nutrient ID'], ['Quantity']],
 )
@@ -39,7 +39,7 @@ table = 'foods'
 input_schema.set_data_type(table=table, field='Food ID', **text())
 input_schema.set_data_type(table=table, field='Food Name', **text())
 input_schema.set_data_type(table=table, field='Per Unit Cost', **non_negative_float())
-input_schema.set_default_value(table=table, field='Per Unit Cost', default_value=1.00)
+input_schema.set_data_type(table=table, field='Portion', **text(tuple(Portions)))
 # endregion
 
 # region nutrients

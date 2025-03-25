@@ -29,12 +29,13 @@ def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     # Retrieve model data
     I, J = data_in['I'], data_in['J']
     nl, nu, nq = data_in['nl'], data_in['nu'], data_in['nq']
-    c = data_in['c']
+    c, vtypes = data_in['c'], data_in['vtypes']
     
     # Create variables
     x = {}
     for i in I:
-        x[i] = mdl.addVar(vtype='C', name=f'x_{i}')
+        # vtype is either "I" (integer) or "C" (continuous), depending on the input foods.Portion values
+        x[i] = mdl.addVar(vtype=vtypes[i], name=f'x_{i}')
 
     # Add constraints
     for j in J:

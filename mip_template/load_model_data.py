@@ -3,6 +3,8 @@ Module to read input data and create the optimization parameters.
 """
 from typing import Any
 
+from mip_template.constants import Portions
+
 
 def get_optimization_data(dat, params: dict[str, Any]) -> dict[str, Any]:
     """
@@ -18,7 +20,8 @@ def get_optimization_data(dat, params: dict[str, Any]) -> dict[str, Any]:
     Returns
     -------
     data_in
-        Dictionary with optimization parameters as {param_name: value} according to the formulation.
+        Dictionary with optimization parameters as {param_name: value} according to the formulation, and possibly some
+        additional ones for coding purposes.
     """
     model_data = dict()  # initialize empty dict to store data for model
     model_data['I'] = set(dat.foods['Food ID'])
@@ -28,5 +31,11 @@ def get_optimization_data(dat, params: dict[str, Any]) -> dict[str, Any]:
     model_data['nq'] = dict(zip(zip(dat.foods_nutrients['Food ID'], dat.foods_nutrients['Nutrient ID']),
                                 dat.foods_nutrients['Quantity']))
     model_data['c'] = dict(zip(dat.foods['Food ID'], dat.foods['Per Unit Cost']))
+    
+    # specify variables types
+    model_data['vtypes'] = dict(zip(
+        dat.foods['Food ID'],
+        dat.foods['Portion'].map({Portions.WHOLE: "I", Portions.FRACTIONAL: "C"})  # I for integer, C for continuous
+    ))
 
     return model_data
