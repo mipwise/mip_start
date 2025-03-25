@@ -25,7 +25,7 @@ def create_output_tables(dat, data_in: dict[str, Any], data_out: dict[str, Any])
     sln = output_schema.PanDat()
 
     # Populate the buy table
-    x_df = pd.DataFrame(data=[(key, value) for key, value in data_out.items()], columns=['Food ID', 'Quantity'])
+    x_df = pd.DataFrame(data=list(data_out.items()), columns=['Food ID', 'Quantity'])
     buy_df = x_df.merge(dat.foods[['Food ID', 'Food Name']], on='Food ID', how='left')
     buy_df = buy_df.round({'Quantity': 2})
     buy_df = buy_df.astype({'Food ID': str, 'Food Name': str, 'Quantity': 'Float64'})
