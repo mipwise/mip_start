@@ -8,6 +8,7 @@ import mip_template
 
 cwd = Path(__file__).parent.resolve()
 
+
 class TestLocalExecution(unittest.TestCase):
     """
     THIS IS NOT UNIT TESTING! Unit testing are implemented in other scripts.
@@ -19,13 +20,13 @@ class TestLocalExecution(unittest.TestCase):
     """
 
     def test_1_action_data_ingestion(self):
-        dat = utils.read_data(f'{cwd}/data/testing_data/testing_data.json', mip_template.input_schema)
+        dat = utils.read_data(f'{cwd}/data/testing_data/input_data_diet_problem.xlsx', mip_template.input_schema)
         utils.check_data(dat, mip_template.input_schema)
         utils.write_data(dat, f'{cwd}/data/inputs', mip_template.input_schema)
 
     def test_2_action_data_prep(self):
         dat = utils.read_data(f'{cwd}/data/inputs', mip_template.input_schema)
-        dat = mip_template.data_prep_solve(dat)
+        dat = mip_template.update_food_cost_solve(dat)
         utils.write_data(dat, f'{cwd}/data/inputs', mip_template.input_schema)
 
     def test_3_main_solve(self):
@@ -36,7 +37,7 @@ class TestLocalExecution(unittest.TestCase):
     def test_4_action_report_builder(self):
         dat = utils.read_data(f'{cwd}/data/inputs', mip_template.input_schema)
         sln = utils.read_data(f'{cwd}/data/outputs', mip_template.output_schema)
-        sln = mip_template.report_builder_solve(dat, sln, f'{cwd}/app/output')
+        sln = mip_template.report_builder_solve(dat, sln, path=f'{cwd}/app/output')
         utils.write_data(sln, f'{cwd}/data/outputs', mip_template.output_schema)
 
 
