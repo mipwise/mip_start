@@ -19,13 +19,16 @@ def create_output_tables(dat, data_in: dict[str, Any], data_out: dict[str, Any])
     data_in
         Input data to the optimization model data, in the form {param_name: value}.
     data_out
-        Output data from the optimization model, in the form {var_name: optimal_values}.
+        Output data from the optimization model.
     """
     # Instantiate output schema object
     sln = output_schema.PanDat()
 
+    # Read optimal values from the model
+    x_sol = data_out['vars']['x']
+
     # Populate the buy table
-    x_df = pd.DataFrame(data=list(data_out.items()), columns=['Food ID', 'Quantity'])
+    x_df = pd.DataFrame(data=list(x_sol.items()), columns=['Food ID', 'Quantity'])
     buy_df = x_df.merge(dat.foods[['Food ID', 'Food Name']], on='Food ID', how='left')
     buy_df = buy_df.round({'Quantity': 2})
     buy_df = buy_df.astype({'Food ID': str, 'Food Name': str, 'Quantity': 'Float64'})

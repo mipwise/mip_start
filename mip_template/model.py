@@ -22,8 +22,11 @@ def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     Returns
     -------
     data_out
-        The model data after optimizing, in the form {var_name: optimal_values}.
+        The model data after optimizing, including status and variables' values.
     """
+    # Initialize output data
+    opt_sol = {}
+    
     # Instantiate the model
     mdl = scip.Model("diet_problem")
     
@@ -59,11 +62,15 @@ def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     mdl.optimize()
     status = mdl.getStatus()
     print(f'Model status: {status}')
-    print(f'Final objective: {mdl.getObjVal()}')
+    opt_sol['status'] = status
     
+    opt_sol['vars'] = {}
     if mdl.getNSols() >= 1:  # if there's at least one feasible solution...
         x_sol = {key: mdl.getVal(var) for key, var in x.items()}
-    else:
-        x_sol = {}
-
-    return x_sol
+        opt_sol['vars']['x'] = x_sol
+        
+        final_obj = mdl.getObjVal()
+        print(f'Final objective: {final_obj}')
+        opt_sol['obj_val'] = final_obj
+    
+    return opt_sol
