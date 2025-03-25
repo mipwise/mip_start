@@ -20,7 +20,7 @@ class TestLocalExecution(unittest.TestCase):
     """
 
     def test_1_action_data_ingestion(self):
-        dat = utils.read_data(f'{cwd}/data/testing_data/input_data_diet_problem.xlsx', mip_template.input_schema)
+        dat = utils.read_data(f'{cwd}/data/testing_data.xlsx', mip_template.input_schema)
         utils.check_data(dat, mip_template.input_schema)
         utils.write_data(dat, f'{cwd}/data/inputs', mip_template.input_schema)
 
