@@ -3,6 +3,7 @@ Implementation of model. The model could be a MIP model, metaheuristic model, et
 """
 from typing import Any
 
+import pandas as pd
 import pyscipopt as scip
 from pyscipopt import quicksum as qs
 
@@ -39,8 +40,12 @@ def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
 
     # Add constraints
     for j in J:
-        mdl.addCons(qs(nq[i, j] * x[i] for i in I) >= nl[j], name=f'nl_{j}')
-        mdl.addCons(qs(nq[i, j] * x[i] for i in I) <= nu[j], name=f'nu_{j}')
+        # C1
+        mdl.addCons(qs(nq[i, j] * x[i] for i in I) >= nl[j], name=f'C1_{j}')
+        
+        # C2
+        if pd.notnull(nu[j]):
+            mdl.addCons(qs(nq[i, j] * x[i] for i in I) <= nu[j], name=f'C2_{j}')
 
     # Set objective
     mdl.setObjective(qs(c[i] * x[i] for i in I), sense='minimize')

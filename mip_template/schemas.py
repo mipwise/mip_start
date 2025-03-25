@@ -3,6 +3,7 @@ Defines the input and output schemas of the problem.
 For more details on how to implement and configure data schemas see:
 https://github.com/mipwise/mip-go/tree/main/5_develop/4_data_schema
 """
+import pandas as pd
 from mwcommons.ticdat_types import non_negative_float, text
 from ticdat import PanDatFactory
 
@@ -47,9 +48,12 @@ table = 'nutrients'
 input_schema.set_data_type(table=table, field='Nutrient ID', **text())
 input_schema.set_data_type(table=table, field='Nutrient Name', **text())
 input_schema.set_data_type(table=table, field='Min Intake', **non_negative_float())
-input_schema.set_data_type(table=table, field='Max Intake', **non_negative_float())
-input_schema.add_data_row_predicate(table=table, predicate_name='Min Intake <= Max Intake',
-                                    predicate=lambda row: row['Min Intake'] <= row['Max Intake'])
+input_schema.set_data_type(table=table, field='Max Intake', **non_negative_float(), nullable=True)
+input_schema.add_data_row_predicate(
+    table=table,
+    predicate_name='Min Intake <= Max Intake',
+    predicate=lambda row: pd.isna(row['Max Intake']) | (row['Min Intake'] <= row['Max Intake'])
+)
 # endregion
 
 # region foods_nutrients
