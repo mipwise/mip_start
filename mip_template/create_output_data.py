@@ -39,7 +39,7 @@ def create_output_tables(dat, data_in: dict[str, Any], data_out: dict[str, Any])
     nutrition_df['Quantity'] = nutrition_df['Quantity'] * nutrition_df['Quantity per Food']
     nutrition_df = nutrition_df[['Nutrient ID', 'Quantity']].groupby('Nutrient ID').agg('sum').reset_index()
     # merge nutrition with nutrients to get additional columns
-    nutrients_df = dat.nutrients[['Nutrient ID', 'Nutrient Name', 'Min Intake']]
+    nutrients_df = dat.nutrients[['Nutrient ID', 'Nutrient Name', 'Min Intake', 'Max Intake']]
     nutrition_df = nutrition_df.merge(nutrients_df, on='Nutrient ID', how='left')
     nutrition_df = nutrition_df.round({'Quantity': 2})
     nutrition_df = nutrition_df.astype({'Nutrient ID': str, 'Nutrient Name': str, 'Quantity': 'Float64',
