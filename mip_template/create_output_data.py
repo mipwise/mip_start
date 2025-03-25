@@ -25,7 +25,7 @@ def create_output_tables(dat, data_in: dict[str, Any], data_out: dict[str, Any])
     sln = output_schema.PanDat()
 
     # Read optimal values from the model
-    x_sol = data_out['vars']['x']
+    x_sol = data_out['vars'].get('x', {})
 
     # Populate the buy table
     x_df = pd.DataFrame(data=list(x_sol.items()), columns=['Food ID', 'Quantity'])
