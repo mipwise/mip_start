@@ -2,6 +2,7 @@
 Implementation of model. The model could be a MIP model, metaheuristic model, etc.
 """
 from typing import Any
+
 import pyscipopt as scip
 from pyscipopt import quicksum as qs
 
@@ -52,6 +53,7 @@ def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     mdl.optimize()
     status = mdl.getStatus()
     print(f'Model status: {status}')
+    print(f'Final objective: {mdl.getObjVal()}')
     
     if mdl.getNSols() >= 1:  # if there's at least one feasible solution...
         x_sol = {key: mdl.getVal(var) for key, var in x.items()}
