@@ -1,7 +1,7 @@
 from mwcommons.ticdat_utils import check_data, set_data_types, set_parameters_datatypes
 
-from mip_start.create_output_data import create_output_tables
-from mip_start.load_model_data import get_optimization_data
+from mip_start.output_data import create_output_tables
+from mip_start.input_data import get_optimization_data
 from mip_start.model import optimize
 from mip_start.schemas import input_schema
 
