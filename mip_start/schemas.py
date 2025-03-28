@@ -7,7 +7,7 @@ import pandas as pd
 from mwcommons.ticdat_types import non_negative_float, text
 from ticdat import PanDatFactory
 
-from mip_template.constants import Portions
+from mip_start.constants import Portions
 
 
 # region INPUT SCHEMA

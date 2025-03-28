@@ -5,7 +5,7 @@ from typing import Any
 
 import pandas as pd
 
-from mip_template.schemas import output_schema
+from mip_start.schemas import output_schema
 
 
 def create_output_tables(dat, data_in: dict[str, Any], data_out: dict[str, Any]):

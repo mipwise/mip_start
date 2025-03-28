@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 from plotly.graph_objs import Figure
 
-from mip_template.constants import APP_OUTPUT_DIR
+from mip_start.constants import APP_OUTPUT_DIR
 
 
 def _save_html_plot(fig: Figure, plot_name: str, path: str = APP_OUTPUT_DIR):

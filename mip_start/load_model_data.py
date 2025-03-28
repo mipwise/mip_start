@@ -3,7 +3,7 @@ Module to read input data and create the optimization parameters.
 """
 from typing import Any
 
-from mip_template.constants import Portions
+from mip_start.constants import Portions
 
 
 def get_optimization_data(dat, params: dict[str, Any]) -> dict[str, Any]:

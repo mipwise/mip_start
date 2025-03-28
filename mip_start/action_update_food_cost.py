@@ -1,4 +1,4 @@
-from mip_template.schemas import input_schema
+from mip_start.schemas import input_schema
 
 
 def update_food_cost_solve(dat):
