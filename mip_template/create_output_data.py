@@ -27,6 +27,10 @@ def create_output_tables(dat, data_in: dict[str, Any], data_out: dict[str, Any])
     # Read optimal values from the model
     x_sol = data_out['vars'].get('x', {})
 
+    # Populate the kpis table
+    kpis_df = pd.DataFrame(data=list(data_out['kpis'].items()), columns=['Name', 'Value'])
+    sln.kpis = kpis_df
+    
     # Populate the buy table
     x_df = pd.DataFrame(data=list(x_sol.items()), columns=['Food ID', 'Quantity'])
     buy_df = x_df.merge(dat.foods[['Food ID', 'Food Name']], on='Food ID', how='left')

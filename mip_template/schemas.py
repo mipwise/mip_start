@@ -28,6 +28,7 @@ input_schema.add_parameter('Mip Gap', default_value=0.001, **non_negative_float(
 
 # region OUTPUT SCHEMA
 output_schema = PanDatFactory(
+    kpis=[['Name'], ['Value']],
     buy=[['Food ID'], ['Food Name', 'Quantity']],
     nutrition=[['Nutrient ID'], ['Nutrient Name', 'Quantity', 'Min Intake', 'Max Intake']],
 )
@@ -83,6 +84,12 @@ output_schema.set_data_type(table=table, field='Nutrient Name', **text())
 output_schema.set_data_type(table=table, field='Quantity', **non_negative_float())
 output_schema.set_data_type(table=table, field='Min Intake', **non_negative_float())
 output_schema.set_data_type(table=table, field='Max Intake', **non_negative_float())
+# endregion
+
+# region kpis
+table = 'kpis'
+output_schema.set_data_type(table=table, field='Name', **text())
+# we don't set a datatype for kpis.Value, since it may contain any type of data
 # endregion
 
 # endregion

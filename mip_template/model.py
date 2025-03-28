@@ -64,13 +64,13 @@ def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     print(f'Model status: {status}')
     opt_sol['status'] = status
     
-    opt_sol['vars'] = {}
+    opt_sol['vars'], opt_sol['kpis'] = {}, {}
     if mdl.getNSols() >= 1:  # if there's at least one feasible solution...
         x_sol = {key: mdl.getVal(var) for key, var in x.items()}
         opt_sol['vars']['x'] = x_sol
         
         final_obj = mdl.getObjVal()
         print(f'Final objective: {final_obj}')
-        opt_sol['obj_val'] = final_obj
+        opt_sol['kpis']['Total Cost'] = round(final_obj, 2)
     
     return opt_sol
