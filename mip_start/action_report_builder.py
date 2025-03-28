@@ -1,6 +1,5 @@
 import os
 
-import pandas as pd
 import plotly.express as px
 from plotly.graph_objs import Figure
 
