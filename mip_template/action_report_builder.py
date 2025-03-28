@@ -7,7 +7,7 @@ from plotly.graph_objs import Figure
 from mip_template.constants import APP_OUTPUT_DIR
 
 
-def _save_html_plot(fig: Figure, plot_name: str, path: str=APP_OUTPUT_DIR):
+def _save_html_plot(fig: Figure, plot_name: str, path: str = APP_OUTPUT_DIR):
     """Save plots, as HTML, to the default directory of Mip Hub.
 
     When executed locally, saves the HTML file to app/output/ (default directory of Mip Hub), or to the specified path.
@@ -19,7 +19,7 @@ def _save_html_plot(fig: Figure, plot_name: str, path: str=APP_OUTPUT_DIR):
     plot_name: str
         Name of the plot to be saved as an HTML file and to be displayed on Mip Hub.
     path: str
-        Path to the output
+        Path to the output.
     """
     # Save the file: get path first, create directory if doesn't exist and save html file
     file_path = os.path.join(f'{path}/{plot_name}.html')
@@ -27,7 +27,7 @@ def _save_html_plot(fig: Figure, plot_name: str, path: str=APP_OUTPUT_DIR):
     fig.write_html(file_path)
 
 
-def report_builder_solve(dat, sln, path: str = '/app/output'):
+def report_builder_solve(dat, sln, path: str = APP_OUTPUT_DIR):
     buy = sln.buy.copy()
     foods_nutrients = dat.foods_nutrients.copy()
     nutrients = dat.nutrients.copy()
@@ -43,7 +43,7 @@ def report_builder_solve(dat, sln, path: str = '/app/output'):
     merged['Contribution'] = merged['Purchase Quantity'] * merged['Nutrient per unit']
 
     # Merge with the nutrients table to get nutrient names
-    merged = pd.merge(merged, nutrients[['Nutrient ID', 'Nutrient Name']], on='Nutrient ID', how='left')
+    merged = merged.merge(nutrients[['Nutrient ID', 'Nutrient Name']], on='Nutrient ID', how='left')
 
     # Create a stacked bar chart using Plotly Express
     fig_stacked = px.bar(
