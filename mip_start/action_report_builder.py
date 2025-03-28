@@ -50,7 +50,7 @@ def report_builder_solve(dat, sln, path: str = APP_OUTPUT_DIR):
         x="Food Name",
         y="Contribution",
         color="Nutrient Name",
-        title="Stacked Bar Chart of Food-Nutrient Contributions",
+        title="Food-Nutrient Contributions",
         labels={"Contribution": "Nutrient Contribution"}
     )
 
