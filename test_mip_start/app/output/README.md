@@ -1,1 +1,0 @@
-Default directory to host HTML files used to display plots on Mip Hub.
