@@ -37,6 +37,11 @@ def optimize(data_in):
         # vtypes allowed: "C", "I", "B", "M"
         x[i] = mdl.addVar(vtype="C", name=f'x_{i}')
 
+        # if i == "F0":  # eggs
+        #     x[i] = mdl.addVar(vtype="I", name=f'x_{i}')
+        # else:
+        #     x[i] = mdl.addVar(vtype="C", name=f'x_{i}')
+
     # Add constraints
     for j in J:
         # C1
