@@ -1,13 +1,10 @@
 """
 Module to read input data and create the optimization parameters.
 """
-from typing import Any
-
 import pandas as pd
 
 
-
-def get_optimization_data(dat) -> dict[str, Any]:
+def get_optimization_data(dat):
     """
     Read input data and prepare optimization parameters.
     
@@ -18,7 +15,7 @@ def get_optimization_data(dat) -> dict[str, Any]:
     
     Returns
     -------
-    data_in
+    data_in: dict[str, Any]
         Dictionary with optimization parameters as {param_name: value} according to the formulation, and possibly some
         additional ones for coding purposes.
     """

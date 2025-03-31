@@ -1,14 +1,12 @@
 """
 Implementation of model. The model could be a MIP model, metaheuristic model, etc.
 """
-from typing import Any
-
 import pandas as pd
 import pyscipopt as scip
 from pyscipopt import quicksum as qs
 
 
-def optimize(data_in: dict[str, Any]) -> dict[str, Any]:
+def optimize(data_in):
     """
     Create the optimization model.
     
@@ -19,7 +17,7 @@ def optimize(data_in: dict[str, Any]) -> dict[str, Any]:
     
     Returns
     -------
-    data_out
+    data_out: dict[str, Any]
         The model data after optimizing, including status and variables' values.
     """
     # Initialize output data

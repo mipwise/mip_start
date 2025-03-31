@@ -1,24 +1,20 @@
 """
 Module to read the outputs from the model and create output data.
 """
-from typing import Any
-
 import pandas as pd
 
 
-def create_output_tables(
-    dat: dict[str, pd.DataFrame], data_in: dict[str, Any], data_out: dict[str, Any]
-) -> dict[str, pd.DataFrame]:
+def create_output_tables(dat, data_in, data_out):
     """
     Receives input and optimization data to create output tables.
     
     Parameters
     ----------
-    dat
+    dat: dict[str, pd.DataFrame]
         Input data, dict {table_name: pandas.DataFrame}
-    data_in
+    data_in: dict[str, Any]
         Input data to the optimization model data, in the form {param_name: value}.
-    data_out
+    data_out: dict[str, Any]
         Output data from the optimization model.
     
     Returns
