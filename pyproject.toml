@@ -1,5 +1,5 @@
 [project]
-name = "mip_template"
+name = "mip_start"
 dynamic = ["version"]
 description = "Template package for building analytics solutions"
 authors = [
@@ -16,14 +16,17 @@ classifiers = [
 ]
 dependencies = [
     "mwcommons>=0.0.2",
+    "openpyxl>=3.1.5",
+    "pandas>=2.1.4",
     "plotly>=5.13.1",
+    "pyscipopt>=5.4.1",
     "ticdat>=0.2.24",
 ]
 
 [project.urls]
-homepage = "https://github.com/mipwise/mip_template"
-source = "https://github.com/mipwise/mip_template"
-tracker = "https://github.com/mipwise/mip_template/issues"
+homepage = "https://github.com/mipwise/mip_start"
+source = "https://github.com/mipwise/mip_start"
+tracker = "https://github.com/mipwise/mip_start/issues"
 
 [build-system]
 build-backend = "setuptools.build_meta"
@@ -33,9 +36,14 @@ requires = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "mip_template.__version__"}
+version = {attr = "mip_start.__version__"}
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["mip_template"]
-exclude = ["test_mip_template"]
+include = ["mip_start"]
+exclude = ["test_mip_start"]
+
+[dependency-groups]
+dev = [
+    "openpyxl>=3.1.5",
+]

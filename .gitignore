@@ -137,6 +137,6 @@ dmypy.json
 ruff.toml
 
 # Temporary files used in local execution
-test_mip_template/data/inputs/*.csv
-test_mip_template/data/outputs/*.csv
-test_mip_template/app/output/*.html
+test_mip_start/data/inputs/*.csv
+test_mip_start/data/outputs/*.csv
+test_mip_start/app/output/*.html
