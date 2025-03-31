@@ -19,7 +19,7 @@ def get_optimization_data(dat):
         Dictionary with optimization parameters as {param_name: value} according to the formulation, and possibly some
         additional ones for coding purposes.
     """
-    model_data = dict()  # initialize empty dict to store data for model
+    model_data = {}  # initialize empty dict to store data for model
     model_data['I'] = set(dat['foods']['Food ID'])
     model_data['J'] = set(dat['nutrients']['Nutrient ID'])
     model_data['nl'] = dict(zip(dat['nutrients']['Nutrient ID'], dat['nutrients']['Min Intake']))
