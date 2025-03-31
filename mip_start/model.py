@@ -8,7 +8,7 @@ import pyscipopt as scip
 from pyscipopt import quicksum as qs
 
 
-def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
+def optimize(data_in: dict[str, Any]) -> dict[str, Any]:
     """
     Create the optimization model.
     
@@ -16,8 +16,6 @@ def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     ----------
     data_in: dict[str, Any]
         Dictionary with optimization input parameters as {param_name: value} according to the formulation.
-    params : dict[str, Any]
-        Dictionary with parameters as {param_name: value} from input data.
     
     Returns
     -------
@@ -54,9 +52,8 @@ def optimize(data_in: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     mdl.setObjective(qs(c[i] * x[i] for i in I), sense='minimize')
 
     # Set solver parameters
-    if params['Time Limit'] is not None:
-        mdl.setParam('limits/time', params['Time Limit'])
-    mdl.setParam('limits/gap', params['Mip Gap'])
+    mdl.setParam('limits/time', 300)  # in seconds
+    mdl.setParam('limits/gap', 0.001)  # 0.1% optimality gap
 
     # Optimize and retrieve the solution
     mdl.optimize()

@@ -7,7 +7,6 @@ rename `mip_start` with the name of your project in a few places:
 - [ ] The name of the [root](../mip_start), [package](mip_start), and
   [testing](test_mip_start) directories (in Pycharm, do a right-click and 
   then  `Refactor > Rename...` or just `SHIFT + F6`).
-- [ ] The name of [unit testing script](test_mip_start/test_mip_start_pkg.py). Be careful to not name it the same as its parent folder!
 - [ ] References in [pyproject.toml](pyproject.toml).
 - [ ] Exceptions in [.gitignore](.gitignore).
 
