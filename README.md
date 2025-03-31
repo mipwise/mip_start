@@ -47,7 +47,5 @@ Otherwise, we need to manually add the project's root folder to the interpreter'
 `pwd > "$(python -c 'import site; print(site.getsitepackages()[0])')/path_to_root.pth"`
 - Windows (PowerShell):  
 `pwd | Out-File -FilePath "$(python -c "import site; print(site.getsitepackages()[0])")\path_to_root.pth" -Encoding ASCII`
-- Windows (cmd):  
-`cd > "%(python -c 'import site; print(site.getsitepackages()[0])')%\path_to_root.pth"`
 
 This will locate the appropriate site-packages directory under your virtual environment, and create a file `path_to_root.pth` with one line that points to the root folder. This ensures that any module/package on this repository can be found (i.e. imported) starting from the project's root folder.
