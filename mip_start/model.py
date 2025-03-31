@@ -36,8 +36,8 @@ def optimize(data_in: dict[str, Any]) -> dict[str, Any]:
     # Create variables
     x = {}
     for i in I:
-        # vtype is either "I" (integer) or "C" (continuous), depending on the input foods.Portion values
-        x[i] = mdl.addVar(vtype=vtypes[i], name=f'x_{i}')
+        # vtypes allowed: "C", "I", "B", "M"
+        x[i] = mdl.addVar(vtype="C", name=f'x_{i}')
 
     # Add constraints
     for j in J:

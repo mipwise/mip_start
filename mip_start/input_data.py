@@ -5,7 +5,6 @@ from typing import Any
 
 import pandas as pd
 
-from mip_start.constants import Portions
 
 
 def get_optimization_data(dat) -> dict[str, Any]:
@@ -31,11 +30,5 @@ def get_optimization_data(dat) -> dict[str, Any]:
     model_data['nq'] = dict(zip(zip(dat['foods_nutrients']['Food ID'], dat['foods_nutrients']['Nutrient ID']),
                                 dat['foods_nutrients']['Quantity']))
     model_data['c'] = dict(zip(dat['foods']['Food ID'], dat['foods']['Per Unit Cost']))
-    
-    # specify variables types
-    model_data['vtypes'] = dict(zip(
-        dat['foods']['Food ID'],
-        dat['foods']['Portion'].map({Portions.WHOLE: "I", Portions.FRACTIONAL: "C"})  # I for integer, C for continuous
-    ))
 
     return model_data
