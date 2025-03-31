@@ -29,7 +29,7 @@ def optimize(data_in):
     # Retrieve model data
     I, J = data_in['I'], data_in['J']
     nl, nu, nq = data_in['nl'], data_in['nu'], data_in['nq']
-    c, vtypes = data_in['c'], data_in['vtypes']
+    c = data_in['c']
     
     # Create variables
     x = {}
