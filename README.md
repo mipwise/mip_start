@@ -30,9 +30,10 @@ and the unit testing scripts.
 1. Clone the repository on your machine and navigate to its folder (same level of this readme)
 2. Create a python virtual environment, e.g. `pythonX.Y -m venv <venv_name>`  
     - Make sure to use a python version `X.Y` compatible with [pyproject.toml](pyproject.toml)'s `requires-python`
+    - Replace `<venv_name>` by a name for your virtual environment (e.g. `.venv`)
 3. Activate the virtual environment
     - Linux/macOS: `source <venv_name>/bin/activate`
-    - Windows: `<venv_name>\Scripts\activate`
+    - Windows (cmd): `<venv_name>\Scripts\activate`
 4. Install dependencies: `pip install -r requirements.txt`
 
 ### Path-handling
@@ -41,10 +42,11 @@ For the scripts on this project to run properly, the python interpreter must be 
 
 If you're using Pycharm, you can disregard this section because it will handle that for you under the hood.
 
-Otherwise, we need to manually add the project's root folder to the interpreter's path. **With your virtual environment activated, and from the project's root folder**, run:  
+Otherwise, you need to manually add the project's root folder to the interpreter's path. **With your virtual environment activated, and from the project's root folder**, run:  
 - Linux/macOS:  
 `pwd > "$(python -c 'import site; print(site.getsitepackages()[0])')/path_to_root.pth"`
-- Windows (PowerShell):  
-`pwd | Out-File -FilePath "$(python -c "import site; print(site.getsitepackages()[0])")\path_to_root.pth" -Encoding ASCII`
+- Windows (cmd):  
+    1. `python -c 'import site; print(site.getsitepackages())'`. This will output some paths on the console; copy the first path that contains `site-packages`;
+    2. `cd > <path>\path_to_root.pth`. Replace `<path>` by what you copied from step 1.
 
 This will locate the appropriate site-packages directory under your virtual environment, and create a file `path_to_root.pth` with one line that points to the root folder. This ensures that any module/package on this repository can be found (i.e. imported) starting from the project's root folder.
