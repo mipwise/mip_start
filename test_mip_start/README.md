@@ -6,7 +6,7 @@ directory:
   with one or two clicks. In particular, the methods of the 
   TestLocalExecution class mimics the execution flow on 
   [Mip Hub](https://www.mipwise.com/mip-hub).
-- [Test](test_mip_template.py): Scripts for unit testing.
+- [Test](test_mip_start_pkg.py): Scripts for unit testing.
 
 The [utils.py](utils.py) script contains utility functions to read, write, 
 and run data integrity checks locally.
