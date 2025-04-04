@@ -34,7 +34,8 @@ and the unit testing scripts.
     - Replace `<venv_name>` by a name for your virtual environment (e.g. `.venv`)
 3. Activate the virtual environment
     - Linux/macOS: `source <venv_name>/bin/activate`
-    - Windows (cmd): `<venv_name>\Scripts\activate`
+    - Windows (cmd): `<venv_name>\Scripts\activate` or `.\<venv_name>\Scripts\activate`
+    - If necessary, call `deactivate` (Linux/macOS/Windows) to deactivate an already activated virtual environment
 4. Install dependencies: `pip install -r requirements.txt`
 
 ### Path-handling
@@ -47,7 +48,9 @@ Otherwise, you need to manually add the project's root folder to the interpreter
 - Linux/macOS:  
 `pwd > "$(python -c 'import site; print(site.getsitepackages()[0])')/path_to_root.pth"`
 - Windows (cmd):  
-    1. `python -c 'import site; print(site.getsitepackages())'`. This will output some paths on the console; copy the first path that contains `site-packages`;
-    2. `cd > <path>\path_to_root.pth`. Replace `<path>` by what you copied from step 1.
+    1. `python -c "import site; print(site.getsitepackages())"`. This will output some paths on the console; copy the first path that contains `site-packages` (without quotes);
+    2. `cd > "<path>\path_to_root.pth"` (make sure to use double quotes). Replace `<path>` by what you copied from step 1.
 
 This will locate the appropriate site-packages directory under your virtual environment, and create a file `path_to_root.pth` with one line that points to the root folder. This ensures that any module/package on this repository can be found (i.e. imported) starting from the project's root folder.
+
+To make sure it worked, you can run `python -c "import sys; print(sys.path)"` and confirm that the path to the root folder of your project shows up among the output.
